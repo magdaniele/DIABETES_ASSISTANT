@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "915024371949",
+    "project_id": "diabetes-assistant-c8df2",
+    "storage_bucket": "diabetes-assistant-c8df2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915024371949:android:f5039e0a2471463602ace4",
+        "android_client_info": {
+          "package_name": "com.example.diabetes_assistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915024371949-ru5qphfkl7o0tpah9dc4ifm8ni4lf64f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaXrd8NV6UPdWPigdPMgqN91RByBgyHDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915024371949-ru5qphfkl7o0tpah9dc4ifm8ni4lf64f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
