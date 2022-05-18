@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_new, deprecated_member_use
+
+import 'package:diabetes_assistant/pages/signUp.dart';
+import 'package:diabetes_assistant/mainOld.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -53,7 +58,10 @@ class _LoginState extends State<Login> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+        },
         child: Text(
           'Login',
           textAlign: TextAlign.center,
@@ -80,7 +88,7 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 200,
                       child: Image.asset(
-                        'assets/Logo1.png',
+                        'assets/diabetesFree.png',
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -96,13 +104,18 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         Text("Don't have an account? "),
                         GestureDetector(
-                          onTap: (){},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Registration()));
+                          },
                           child: Text(
-                            'SingUp',
+                            'SignUp',
                             style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.w500, 
-                              fontSize: 15),
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15),
                           ),
                         )
                       ],
@@ -115,3 +128,31 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
+class LoginGet extends StatelessWidget {
+  String url = "";
+  Future<String> res() async{
+    var respuesta = await http.get(Uri.parse(url));
+
+    print(respuesta.body);
+    return respuesta.body;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: RaisedButton(child: Text(""), onPressed: (){res();},),);
+  }
+} 
+
+class LoginPost extends StatelessWidget {
+  String url = "";
+  Future<String> userLogin() async{
+    var respuesta = await http.post(Uri.parse(url),body: {"username":"name","password":"*****"});
+
+    print(respuesta.body);
+    return respuesta.body;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: RaisedButton(child: Text(""), onPressed: (){userLogin();},),);
+  }
+} 

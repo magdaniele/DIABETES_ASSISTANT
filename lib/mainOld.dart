@@ -1,11 +1,12 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_new, file_names, prefer_final_fields, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-Future<void>  main () async => {
-  WidgetsFlutterBinding.ensureInitialized(),
-  runApp(MaterialApp(home: BottomNavBar()))
-};
+Future<void> main() async => {
+      WidgetsFlutterBinding.ensureInitialized(),
+      runApp(MaterialApp(home: BottomNavBar()))
+    };
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -16,8 +17,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _page = 0;
 
   GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
-  final Future<FirebaseApp> _fbApp =  Firebase.initializeApp();
-  
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         body: Container(
           color: Colors.white,
-          child: Center(  
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -60,7 +61,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   } ,
                 )*/
               ],
-            ) ,
+            ),
           ),
         ));
   }
