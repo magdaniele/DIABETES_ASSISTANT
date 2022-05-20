@@ -8,16 +8,19 @@ import 'package:flutter/material.dart';
 
 AppBar buildAppBar(BuildContext context) {
   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-  final icon = CupertinoIcons.moon_stars;
+  const icon = CupertinoIcons.moon_stars;
   return AppBar(
     leading: BackButton(
-    ),
+    color: isDarkMode? Colors.white:Colors.black,
+    onPressed: ()=> {
+            Navigator.pop(context)
+          },),
     backgroundColor: Colors.transparent,
     elevation: 0,
     actions: [
       ThemeSwitcher(
         builder: (context) => IconButton(
-          icon: Icon(icon),
+          icon: Icon(icon, color: isDarkMode? Colors.white:Colors.black,),
           onPressed: () {
             final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
             final switcher = ThemeSwitcher.of(context);
