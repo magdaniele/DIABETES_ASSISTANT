@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new, deprecated_member_use
 
 import 'package:diabetes_assistant/pages/signUp.dart';
-import 'package:diabetes_assistant/mainOld.dart';
+import 'package:diabetes_assistant/privatePages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -54,13 +54,13 @@ class _LoginState extends State<Login> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Color(0xFF84BDCE),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Text(
           'Login',
@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
                           child: Text(
                             'SignUp',
                             style: TextStyle(
-                                color: Colors.blueAccent,
+                                color: Color(0xFF84BDCE),
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15),
                           ),

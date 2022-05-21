@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/privatePages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
@@ -6,10 +9,14 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => ThemeSwitchingArea(
+        child: Builder(
+            builder: (context) =>Scaffold(
         appBar: AppBar(
-            title: const Text('Home'), backgroundColor: Color(0xFF84BDCE)),
+            title: const Text('Home'), backgroundColor: Color(0xFF8215466)),
         drawer: const NavigationDrawer(),
+      ),
+      ),
       );
 }
 
@@ -29,7 +36,7 @@ class NavigationDrawer extends StatelessWidget {
       );
 
   Widget builderHeader(BuildContext context) => Material(
-        color: Color(0xFF84BDCE),
+        color: Color(0xFF8215466),
         child: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -37,16 +44,23 @@ class NavigationDrawer extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const userProfile()));
           },
           child: Container(
-            color: Color(0xFF84BDCE),
+            color: Color(0xFF8215466),
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top,
             ),
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 52,
-                  backgroundImage: AssetImage(user.imagePath),
+                SizedBox(
+                  height: 24,
                 ),
+                CircleAvatar(
+                    radius: 51.5,
+                    backgroundColor: Colors.black,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(user.imagePath),
+                      radius: 50.0,
+                    ),
+                    ),
                 SizedBox(
                   height: 12,
                 ),
@@ -56,8 +70,11 @@ class NavigationDrawer extends StatelessWidget {
                 ),
                 Text(
                   user.email,
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                )
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
               ],
             ),
           ),
@@ -77,10 +94,10 @@ class NavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.person_outline),
             title: const Text('Profile'),
             onTap: () => {
-            Navigator.pop(context),
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const userProfile()))
-          },
+              Navigator.pop(context),
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const userProfile()))
+            },
           ),
           ListTile(
             leading: const Icon(Icons.calculate_outlined),

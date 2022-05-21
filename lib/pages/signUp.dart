@@ -101,7 +101,7 @@ class _RegistrationState extends State<Registration> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
+      color: Color(0xFF84BDCE),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -141,7 +141,7 @@ class _RegistrationState extends State<Registration> {
                     SizedBox(
                       height: 200,
                       child: Image.asset(
-                        'assets/Logo1.png',
+                        'assets/diabetesFree.png',
                         fit: BoxFit.contain,
                       ),
                     ),
