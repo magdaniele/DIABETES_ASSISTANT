@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, unnecessary_new, deprecated_member_use, use_key_in_widget_constructors, must_be_immutable, avoid_print
 
 import 'package:diabetes_assistant/pages/signUp.dart';
 import 'package:diabetes_assistant/privatePages/home.dart';

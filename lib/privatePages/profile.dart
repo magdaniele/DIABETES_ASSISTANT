@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, camel_case_types
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/model/user.dart';
@@ -15,7 +15,7 @@ class userProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = userPreferences.myUser;
+    const user = userPreferences.myUser;
     return ThemeSwitchingArea(
         child: Builder(
             builder: (context) => Scaffold(

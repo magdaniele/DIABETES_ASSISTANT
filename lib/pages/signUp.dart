@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new
+// ignore_for_file: prefer_const_constructors, unnecessary_new, file_names
 import 'package:flutter/material.dart';
 
 class Registration extends StatefulWidget {

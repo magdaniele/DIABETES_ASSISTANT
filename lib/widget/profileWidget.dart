@@ -1,3 +1,5 @@
+// ignore_for_file: override_on_non_overriding_member, annotate_overrides, file_names
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,12 +8,16 @@ class ProfileWidget extends StatelessWidget {
   @override
   final String imagePath;
   final bool isEdit;
+  final bool isPath;
+  final String fileImage; 
   final VoidCallback onClicked;
   const ProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit=false,
     required this.onClicked,
+    this.isPath=false,
+    this.fileImage = '',
   }) : super(key: key);
 
   Widget build(BuildContext context) {
@@ -28,12 +34,12 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = AssetImage(imagePath);
+    final image = imagePath;
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: image,
+          image: isPath? FileImage(File(fileImage)) as ImageProvider: AssetImage(image),
           fit: BoxFit.cover,
           width: 128,
           height: 128,
@@ -49,7 +55,7 @@ class ProfileWidget extends StatelessWidget {
       color: Colors.white,
       all: 3,
       child: buildCircle(
-      color: Color(0xFF84BDCE),
+      color: const Color(0xFF84BDCE),
       all: 8,
       child: Icon(
         isEdit? Icons.add_a_photo : Icons.edit ,

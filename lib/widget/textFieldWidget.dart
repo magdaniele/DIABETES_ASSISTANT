@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     children: [
       Text(
         widget.label,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
       ),
       const SizedBox(height: 8,),
       TextField(

@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, camel_case_types, file_names
 
 import 'package:diabetes_assistant/model/user.dart';
 

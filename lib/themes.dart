@@ -11,6 +11,7 @@ class MyThemes {
     primaryColorDark: primaryColor,
     colorScheme: ColorScheme.dark(primary: primary),
     dividerColor: Colors.white,
+    
   );
 
   static final lightTheme = ThemeData(

@@ -39,6 +39,7 @@ dependencies:
   firebase_database: ^9.0.13
   http: ^0.13.4
   animated_theme_switcher: ^2.0.6-nullsafety.0
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

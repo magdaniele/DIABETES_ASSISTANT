@@ -1,6 +1,10 @@
+// ignore_for_file: prefer_const_constructors, file_names, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 
 class NumbersWidget extends StatelessWidget {
+  const NumbersWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) =>IntrinsicHeight( 
     child: Row(

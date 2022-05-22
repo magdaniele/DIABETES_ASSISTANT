@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_full_hex_values_for_flutter_colors
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:diabetes_assistant/privatePages/calculator.dart';
 import 'package:diabetes_assistant/privatePages/profile.dart';
+import 'package:diabetes_assistant/privatePages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 
@@ -102,13 +104,23 @@ class NavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.calculate_outlined),
             title: const Text('Calculator'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Calculator())
+                  );
+            },
           ),
           const Divider(color: Colors.black),
           ListTile(
             leading: const Icon(Icons.settings_outlined),
             title: const Text('Configuration'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Settings())
+                  );
+            },
           ),
         ],
       ));
