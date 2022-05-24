@@ -3,15 +3,14 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/privatePages/home.dart';
 //import 'package:diabetes_assistant/model/user.dart';
-//import 'package:diabetes_assistant/themes.dart';
-import 'package:diabetes_assistant/utils/userPreferences.dart';
+//import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Calculator extends StatelessWidget{
-  const Calculator({Key? key}) : super(key: key);
-  final user = userPreferences.myUser;
-    final icon = CupertinoIcons.moon_stars;
+class Appointment extends StatelessWidget{
+  const Appointment({Key? key}) : super(key: key);
+  //final User user = userPreferences.myUser;
+  final icon = CupertinoIcons.moon_stars;
 
 
   @override
@@ -20,11 +19,11 @@ class Calculator extends StatelessWidget{
         child: Builder(
             builder: (context) => Scaffold(
               appBar: AppBar(
-                title: const Text('Calculator'),
-                backgroundColor: const Color(0xFF8215466),
+                title: const Text('Appointments'),
+                backgroundColor: const Color(0xff8215466),
               ),
-              body: const Text('Calculator Page'),
-               drawer: const NavigationDrawer()
+              body: const Text('Appointments Page'),
+              drawer: const NavigationDrawer()
             ),
             ),
             );}

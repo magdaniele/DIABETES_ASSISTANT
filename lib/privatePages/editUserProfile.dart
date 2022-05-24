@@ -46,6 +46,9 @@ class _EditUserProfileState extends State<EditUserProfile> {
             padding: EdgeInsets.symmetric(horizontal: 32),
             physics: BouncingScrollPhysics(),
             children: [
+              const SizedBox(
+                        height: 24,
+                      ),
               imageProfile(),
               const SizedBox(
                 height: 24,

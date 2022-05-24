@@ -22,3 +22,10 @@ class MyThemes {
   );
   
 }
+
+class GradientColors {
+  static List<Color> sky = [Color(0XFF6448FE), Color(0xFF5FC6FF)];
+  static List<Color> suncet = [Color(0XFFFE6197), Color(0xFFFFB463)];
+  static List<Color> sea = [Color(0XFFFFA738), Color(0xFF63FFD5)];
+  static List<Color> sfire = [Color(0XFFFF5DCD), Color(0xFFFF8484)];
+}

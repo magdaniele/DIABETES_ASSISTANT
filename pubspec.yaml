@@ -40,6 +40,8 @@ dependencies:
   http: ^0.13.4
   animated_theme_switcher: ^2.0.6-nullsafety.0
   image_picker: ^0.8.5+3
+  dotted_border: ^2.0.0+2
+  flutter_local_notifications: ^9.5.3+1
 
 dev_dependencies:
   flutter_test:
