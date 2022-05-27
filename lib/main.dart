@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_declarations, use_key_in_widget_constructors
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:diabetes_assistant/pages/login.dart';
 //import 'package:diabetes_assistant/privatePages/home.dart';
-//import 'package:diabetes_assistant/pages/login.dart';
-import 'package:diabetes_assistant/privatePages/alarm.dart';
+//import 'package:diabetes_assistant/privatePages/diet.dart';
+//import 'package:diabetes_assistant/privatePages/alarm.dart';
 //import 'package:diabetes_assistant/privatePages/editUserProfile.dart';
 //import 'package:diabetes_assistant/privatePages/editUserProfile.dart';
 //import 'package:diabetes_assistant/privatePages/profile.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
                   theme: user.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
                   title: 'Login Demo',
-                  home: Alarm(),
+                  home:Login(),
                   scrollBehavior: ScrollBehavior(),
                 )));
   }

@@ -42,6 +42,10 @@ dependencies:
   image_picker: ^0.8.5+3
   dotted_border: ^2.0.0+2
   flutter_local_notifications: ^9.5.3+1
+  charts_flutter: ^0.12.0
+  font_awesome_flutter: ^10.1.0
+  url_launcher: ^6.1.2
+  syncfusion_flutter_charts: ^20.1.57
 
 dev_dependencies:
   flutter_test:

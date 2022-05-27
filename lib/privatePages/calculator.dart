@@ -23,8 +23,8 @@ class Calculator extends StatelessWidget{
                 title: const Text('Calculator'),
                 backgroundColor: const Color(0xFF8215466),
               ),
+               drawer: const NavigationDrawer(),
               body: const Text('Calculator Page'),
-               drawer: const NavigationDrawer()
             ),
             ),
             );}

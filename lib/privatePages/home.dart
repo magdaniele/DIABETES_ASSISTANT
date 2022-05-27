@@ -3,7 +3,8 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/privatePages/appointment.dart';
 import 'package:diabetes_assistant/privatePages/calculator.dart';
-import 'package:diabetes_assistant/privatePages/alarm.dart';
+//import 'package:diabetes_assistant/privatePages/alarm.dart';
+import 'package:diabetes_assistant/privatePages/diet.dart';
 import 'package:diabetes_assistant/privatePages/profile.dart';
 import 'package:diabetes_assistant/privatePages/settings.dart';
 import 'package:flutter/material.dart';
@@ -108,12 +109,12 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.alarm),
-            title: const Text('Notifications'),
+            leading: const Icon(Icons.brunch_dining),
+            title: const Text('Glicemia diaria'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Alarm())
+                  MaterialPageRoute(builder: (context) =>DietPage(child: build(context),))
                   );
             },
           ),
@@ -128,8 +129,8 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.calendar_month),
-            title: const Text('Appointments'),
+            leading: const Icon(Icons.chat_outlined),
+            title: const Text('Chat with your doctor'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
