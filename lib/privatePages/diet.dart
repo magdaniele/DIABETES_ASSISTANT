@@ -109,7 +109,7 @@ class _DietPageState extends State<DietPage> {
                               animate: true,
                               animationDuration: Duration(seconds: 5),
                               behaviors: [
-                                new charts.ChartTitle('Days',
+                                new charts.ChartTitle('Dias',
                                     behaviorPosition:
                                         charts.BehaviorPosition.bottom,
                                     titleOutsideJustification: charts

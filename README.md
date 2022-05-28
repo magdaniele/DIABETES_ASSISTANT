@@ -1,16 +1,14 @@
-# diabetes_assistant
+# Diabetes_assistant
 
-A new Flutter project.
+Es un proyecto de asistencia a pacientes con diabetes que permite ver la grafica de tu muestra de glicemia, alarmarte cuando necesites tomar tus medicamentos, organizar tus dietas e inclusive entablar una conversacion con un medico para que este te brinde los consejos necesarios para tu mejorar salud.
 
-## Getting Started
+## Imagenes de la aplicación
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Imagen de inicio de sesion
+- [Imagen de inicio de sesion](https://postimg.cc/7CZzzmFQ)
+### Grafica de glicemia
+- [Grafica de glicemia](https://postimg.cc/5XNyKjsX)
+### Alarma de medicamentos
+- [Alarma de medicamentos](https://postimg.cc/tY5RQyc8)
+### Perfil de usuario
+- [Perfil de usuario](https://postimg.cc/MMVxs8RP)

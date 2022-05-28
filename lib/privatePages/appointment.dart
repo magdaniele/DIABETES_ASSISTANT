@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Appointment extends StatelessWidget {
-  final TextEditingController codeController = TextEditingController();
+  final TextEditingController codeController =
+      TextEditingController(text: '57');
   final TextEditingController numberController = TextEditingController();
-  final TextEditingController messageController = TextEditingController();
+  final TextEditingController messageController = TextEditingController(
+      text:
+          'Hola doctor me he estado sintiendo mal desde hace poco y quisiera consultar su opinion.');
 
   void _launchURL(_url) async => await canLaunch(_url)
       ? await launch(_url)
