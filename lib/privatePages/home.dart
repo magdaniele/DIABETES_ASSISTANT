@@ -1,15 +1,11 @@
 // ignore_for_file: prefer_const_constructors, use_full_hex_values_for_flutter_colors
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:diabetes_assistant/privatePages/alarm.dart';
-import 'package:diabetes_assistant/privatePages/appointment.dart';
-import 'package:diabetes_assistant/privatePages/calculator.dart';
-//import 'package:diabetes_assistant/privatePages/alarm.dart';
-import 'package:diabetes_assistant/privatePages/diet.dart';
-import 'package:diabetes_assistant/privatePages/profile.dart';
-import 'package:diabetes_assistant/privatePages/settings.dart';
+import 'package:diabetes_assistant/themes.dart';
+import 'package:diabetes_assistant/utils/advices.dart';
+import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/material.dart';
-import 'package:diabetes_assistant/utils/userPreferences.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,149 +13,112 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ThemeSwitchingArea(
         child: Builder(
-            builder: (context) =>Scaffold(
-        appBar: AppBar(
-            title: const Text('Home'), backgroundColor: Color(0xFF8215466)),
-        drawer: const NavigationDrawer(),
-      ),
-      ),
-      );
-}
-
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
-  final user = userPreferences.myUser;
-  @override
-  Widget build(BuildContext context) => Drawer(
-        child: SingleChildScrollView(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            builderHeader(context),
-            builderMenuItems(context),
-          ],
-        )),
-      );
-
-  Widget builderHeader(BuildContext context) => Material(
-        color: Color(0xFF8215466),
-        child: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const userProfile()));
-          },
-          child: Container(
-            color: Color(0xFF8215466),
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 24,
-                ),
-                CircleAvatar(
-                    radius: 51.5,
-                    backgroundColor: Colors.black,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(user.imagePath),
-                      radius: 50.0,
-                    ),
-                    ),
-                SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  user.name,
-                  style: TextStyle(fontSize: 28, color: Colors.white),
-                ),
-                Text(
-                  user.email,
-                  style: TextStyle(fontSize: 12, color: Colors.white),
-                ),
-                SizedBox(
-                  height: 24,
-                ),
-              ],
-            ),
+          builder: (context) => Scaffold(
+            appBar: AppBar(
+                title: const Text('Home'), backgroundColor: Color(0xFF8215466)),
+            drawer: const NavigationDrawer(),
+            body: _homePage(context),
           ),
         ),
       );
 
-  Widget builderMenuItems(BuildContext context) => Container(
-      padding: const EdgeInsets.all(24),
-      child: Wrap(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Home'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const HomePage()));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.person_outline),
-            title: const Text('Profile'),
-            onTap: () => {
-              Navigator.pop(context),
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const userProfile()))
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.brunch_dining),
-            title: const Text('Glicemia diaria'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>DietPage(child: build(context),))
-                  );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.alarm),
-            title: const Text('Notificar Medicamento'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Alarm())
-                  );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.calculate_outlined),
-            title: const Text('Calculator'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Calculator())
-                  );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.chat_outlined),
-            title: const Text('Chat with your doctor'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Appointment())
-                  );
-            },
-          ),
-          const Divider(color: Colors.black),
-          ListTile(
-            leading: const Icon(Icons.settings_outlined),
-            title: const Text('Configuration'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Settings())
-                  );
-            },
-          ),
-        ],
-      ));
+  Widget _homePage(BuildContext context) {
+    return Container(
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(children: <Widget>[
+                Text(
+                  'Consejos',
+                  style: TextStyle(
+                      fontFamily: 'Avenir',
+                      fontSize: 44,
+                      color: const Color(0xff215466),
+                      fontWeight: FontWeight.w900),
+                )
+              ]),
+            ),
+            Container(
+              height: 500,
+              padding: const EdgeInsets.only(left: 32),
+              child: Swiper(
+                itemCount: consejos.length,
+                itemWidth: MediaQuery.of(context).size.width - 2 * 64,
+                layout: SwiperLayout.STACK,
+                pagination: SwiperPagination(
+                  builder: DotSwiperPaginationBuilder(
+                    activeSize: 15,
+                    space: 8,
+                    activeColor: Color(0XFF215466)
+                  ),
+                  alignment: Alignment.bottomCenter,
+                ),
+                itemBuilder: (context, index) {
+                  return Stack(children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 70,
+                        ),
+                        Card(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32)),
+                          color: Color(0xffE5f5f3),
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 100),
+                                  Text(
+                                    consejos[index].name,
+                                    style: TextStyle(
+                                        fontFamily: 'Avenir',
+                                        fontSize: 40,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w900),
+                                        textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: 32),
+                                  Text(
+                                    consejos[index].description,
+                                    style: TextStyle(
+                                        fontFamily: 'Avenir',
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(height: 50),
+                                  /* Row(
+                                    children: <Widget>[
+                                      Text(
+                                        'Mas información',
+                                        style: TextStyle(
+                                            fontFamily: 'Avenir',
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      Icon(Icons.arrow_forward)
+                                    ],
+                                  ) */
+                                ]),
+                          ),
+                        )
+                      ],
+                    ),
+                    /* Image.asset(consejos[index].iconImage) */
+                  ]);
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

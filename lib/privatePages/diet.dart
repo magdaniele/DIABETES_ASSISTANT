@@ -1,7 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, unused_field, deprecated_member_use, prefer_collection_literals, prefer_const_constructors, non_constant_identifier_names, unnecessary_new, annotate_overrides, avoid_unnecessary_containers, avoid_types_as_parameter_names, prefer_const_constructors_in_immutables, prefer_final_fields
 //import 'package:diabetes_assistant/model/user.dart';
 //import 'package:diabetes_assistant/utils/userPreferences.dart';
-import 'package:diabetes_assistant/privatePages/home.dart';
+import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 

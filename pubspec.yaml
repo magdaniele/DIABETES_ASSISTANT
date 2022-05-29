@@ -48,6 +48,7 @@ dependencies:
   syncfusion_flutter_charts: ^20.1.57
   flutter_typeahead: ^4.0.0
   faker: ^2.0.0
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

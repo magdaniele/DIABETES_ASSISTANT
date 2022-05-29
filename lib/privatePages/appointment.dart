@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, use_full_hex_values_for_flutter_colors, use_key_in_widget_constructors
 
-import 'package:diabetes_assistant/privatePages/home.dart';
+import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

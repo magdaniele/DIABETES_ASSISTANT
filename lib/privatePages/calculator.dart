@@ -1,10 +1,10 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_unnecessary_containers
+// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_unnecessary_containers, prefer_const_constructors
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:diabetes_assistant/privatePages/home.dart';
 import 'package:diabetes_assistant/utils/foodData.dart';
 //import 'package:diabetes_assistant/model/user.dart';
 //import 'package:diabetes_assistant/themes.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
+import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';

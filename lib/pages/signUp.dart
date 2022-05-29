@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new, file_names
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _RegistrationState extends State<Registration> {
   final emailController = new TextEditingController();
   final passwordController = new TextEditingController();
   final confirmPasswordController = new TextEditingController();
+  final birthdayController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +99,36 @@ class _RegistrationState extends State<Registration> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
+    final birthdayField = TextField(
+      autofocus: false,
+      controller: birthdayController,
+      readOnly: true,
+      obscureText: false,
+      onSubmitted: (value) {
+        birthdayController.text = value;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.calendar_today),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: 'dd/mm/yyyy',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2023));
+        if (pickedDate != null) {
+          String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+          birthdayController.text = formattedDate; //
+        } else {
+          birthdayController.text='';
+          //print("Date is not selected");
+        }
+      },
+    );
 
     final signUpButton = Material(
       elevation: 5,
@@ -155,6 +187,8 @@ class _RegistrationState extends State<Registration> {
                     passwordField,
                     SizedBox(height: 20),
                     confirmPasswordField,
+                    SizedBox(height: 20),
+                    birthdayField,
                     SizedBox(height: 45),
                     signUpButton,
                     SizedBox(height: 15),

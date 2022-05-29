@@ -3,8 +3,8 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/model/user.dart';
 import 'package:diabetes_assistant/privatePages/editUserProfile.dart';
-import 'package:diabetes_assistant/privatePages/home.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
+import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:diabetes_assistant/widget/numbersWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_assistant/widget/buildAppBar.dart';
