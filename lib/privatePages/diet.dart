@@ -85,7 +85,7 @@ class _DietPageState extends State<DietPage> {
         length: 1,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Glicemia'),
+            title: const Text('Glucemia'),
             backgroundColor: const Color(0xFF8215466),
           ),
           drawer: const NavigationDrawer(),
@@ -98,7 +98,7 @@ class _DietPageState extends State<DietPage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Glicemia diaria',
+                          'Glucemia diaria',
                           style: TextStyle(
                               fontSize: 24.0, fontWeight: FontWeight.bold),
                         ),
@@ -114,7 +114,7 @@ class _DietPageState extends State<DietPage> {
                                         charts.BehaviorPosition.bottom,
                                     titleOutsideJustification: charts
                                         .OutsideJustification.middleDrawArea),
-                                new charts.ChartTitle('Glicemia(mg/dL)',
+                                new charts.ChartTitle('Glucemia(mg/dL)',
                                     behaviorPosition:
                                         charts.BehaviorPosition.start,
                                     titleOutsideJustification: charts

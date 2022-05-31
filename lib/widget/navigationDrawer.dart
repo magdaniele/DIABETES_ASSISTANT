@@ -96,7 +96,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.brunch_dining),
-            title: const Text('Glicemia diaria'),
+            title: const Text('Glucemia diaria'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
