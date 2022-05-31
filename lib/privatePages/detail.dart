@@ -11,16 +11,25 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Color(0xFF84BDCE)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: SafeArea(
         bottom: false,
         child: Stack(
           children: <Widget>[
-            
-            Positioned(
+            /*  Positioned(
               right: -64, 
               child: Hero(
                 tag: consejo.position,
-                child: Image.asset(consejo.iconImage))),
+                child: Image.asset(consejo.iconImage))), */
             Positioned(
               top: 60,
               left: 32,
@@ -35,17 +44,11 @@ class DetailPage extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            IconButton(
-              onPressed: (() {
-                Navigator.pop(context);
-              }), 
-              icon: Icon(Icons.arrow_back_ios)
-              ),
-              SingleChildScrollView(
+            SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(32.0),
+                    padding: const EdgeInsets.all(24.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -57,7 +60,7 @@ class DetailPage extends StatelessWidget {
                           style: const TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 56,
-                            color: Colors.blueAccent,
+                            color: Color(0XFF215466),
                             fontWeight: FontWeight.w900,
                           ),
                           textAlign: TextAlign.left,
@@ -67,7 +70,7 @@ class DetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Avenir',
                             fontSize: 31,
-                            color: Colors.blueAccent,
+                            color: Color(0XFF215466),
                             fontWeight: FontWeight.w300,
                           ),
                           textAlign: TextAlign.left,
@@ -75,23 +78,23 @@ class DetailPage extends StatelessWidget {
                         const Divider(
                           color: Colors.black38,
                         ),
-                        Text(
-                          consejo.description,
-                          style: const TextStyle(
-                            fontFamily: 'Avenir',
-                            fontSize: 20,
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.w500,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 24.0),
+                          child: Text(
+                            consejo.description,
+                            style: const TextStyle(
+                              fontFamily: 'Avenir',
+                              fontSize: 20,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          textAlign: TextAlign.left,
-                        ),
-                        const Divider(
-                          color: Colors.black38,
                         ),
                       ],
                     ),
                   ),
-                  const Padding(
+                  /* const Padding(
                     padding: EdgeInsets.only(left: 32.0),
                     child: Text(
                       'Some more pics',
@@ -119,7 +122,7 @@ class DetailPage extends StatelessWidget {
                                 )),
                           );
                         }),
-                  )
+                  ) */
                 ],
               ),
             ),

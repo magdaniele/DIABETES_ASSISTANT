@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, use_full_hex_values_for_flutter_colors, use_key_in_widget_constructors
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,7 +8,9 @@ import 'package:url_launcher/url_launcher.dart';
 class Appointment extends StatelessWidget {
   final TextEditingController codeController =
       TextEditingController(text: '57');
-  final TextEditingController numberController = TextEditingController();
+  final TextEditingController numberController = TextEditingController(
+    text: '3004287483'
+  );
   final TextEditingController messageController = TextEditingController(
       text:
           'Hola doctor me he estado sintiendo mal desde hace poco y quisiera consultar su opinion.');
@@ -25,7 +28,9 @@ class Appointment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ThemeSwitchingArea(
+        child: Builder(
+            builder: (context) => Scaffold(
       appBar: AppBar(
         title: const Text('Chat with your doctor'),
         backgroundColor: const Color(0xFF8215466),
@@ -101,11 +106,11 @@ class Appointment extends StatelessWidget {
 
                     if (codeController.text == '') {
                       showSnackbar(
-                          error: 'Enter Country Code, Ex: 91 for india',
+                          error: 'Ingresa el código del país, Ex: 57 para Colombia',
                           context: context);
                     } else if (numberController.text == '') {
                       showSnackbar(
-                          error: 'Enter Country Code, Ex: 91 for india',
+                          error: 'Ingresa un número de telefono',
                           context: context);
                     } else {
                       var message = Uri.parse(messageController.text);
@@ -134,7 +139,7 @@ class Appointment extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Open Chat',
+                            'Go to Chat',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0,
@@ -172,6 +177,8 @@ class Appointment extends StatelessWidget {
           ),
         ),
       ),
+    ),
+    ),
     );
   }
 }

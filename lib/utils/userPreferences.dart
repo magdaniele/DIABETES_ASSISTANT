@@ -8,6 +8,9 @@ class userPreferences {
     name:'Eddy Cardona',
     email:'magdaniel@uninorte.edu.co',
     about:'Me divierto en mis tiempos libres y mi meta es llegar a tener algun dia el peso ideal utilizando esta maravillosa herramienta como pie de apoyo.',
+    birthday: '2000-07-01',
+    height: 183,
+    weight: 75,
     isDarkMode:false,
   );
 }

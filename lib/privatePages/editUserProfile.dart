@@ -78,6 +78,22 @@ class _EditUserProfileState extends State<EditUserProfile> {
               const SizedBox(
                 height: 24,
               ),
+              TextFieldWidget(
+                label: 'Weight',
+                text: user.weight.toString(),
+                onChanged: (weight) {},
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldWidget(
+                label: 'Height',
+                text: user.height.toString(),
+                onChanged: (height) {},
+              ),
+              const SizedBox(
+                height: 24,
+              ),
               updateUser,
             ],
           ),
@@ -100,13 +116,13 @@ class _EditUserProfileState extends State<EditUserProfile> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              FlatButton.icon(
+              ElevatedButton.icon(
                 onPressed: (){
                   takePicture(ImageSource.camera);
                 }, 
                 icon: Icon(Icons.camera), 
                 label: Text('Camera')),
-                FlatButton.icon(
+                ElevatedButton.icon(
                 onPressed: (){
                   takePicture(ImageSource.gallery);
                 }, 

@@ -132,7 +132,7 @@ class Alarm extends StatelessWidget {
                               color: Color(0xFF245466),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24))),
-                          child: FlatButton(
+                          child: MaterialButton(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 32, vertical: 8),
                             onPressed: () {
@@ -194,8 +194,8 @@ class Alarm extends StatelessWidget {
         iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
         0,
-        'office',
-        'Good morning! Time for office',
+        'Hora de la insulina',
+        'Ya es hora de que tomes 15 mg de insulina',
         scheduledNotificationDateTime,
         platfromChannelSpecifics);
   }

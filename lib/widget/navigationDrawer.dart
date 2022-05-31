@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_full_hex_values_for_flutter_colors, file_names, unused_import
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:diabetes_assistant/pages/login.dart';
 import 'package:diabetes_assistant/privatePages/alarm.dart';
 import 'package:diabetes_assistant/privatePages/appointment.dart';
 import 'package:diabetes_assistant/privatePages/calculator.dart';
@@ -137,11 +138,11 @@ class NavigationDrawer extends StatelessWidget {
           const Divider(color: Colors.black),
           ListTile(
             leading: const Icon(Icons.settings_outlined),
-            title: const Text('Configuration'),
+            title: const Text('Log Out'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Settings())
+                  MaterialPageRoute(builder: (context) => Login())
                   );
             },
           ),

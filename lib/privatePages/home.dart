@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_full_hex_values_for_flutter_colors, unused_import, import_of_legacy_library_into_null_safe, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:diabetes_assistant/model/user.dart';
+import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:diabetes_assistant/privatePages/detail.dart';
 import 'package:diabetes_assistant/themes.dart';
 import 'package:diabetes_assistant/utils/advices.dart';
@@ -24,6 +26,7 @@ class HomePage extends StatelessWidget {
       );
 
   Widget _homePage(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Container(
       child: SafeArea(
         child: Column(
@@ -36,7 +39,7 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: 'Avenir',
                       fontSize: 40,
-                      color: Color(0xFF8215466),
+                      color: isDarkMode?  Color.fromARGB(248, 222, 237, 243) : Color(0xFF8215466),
                       fontWeight: FontWeight.w900),
                 )
               ]),
@@ -52,7 +55,8 @@ class HomePage extends StatelessWidget {
                   builder: DotSwiperPaginationBuilder(
                     activeSize: 15,
                     space: 8,
-                    activeColor: Color(0XFF215466)
+                    activeColor: Color(0XFF215466),
+                    color: Color(0xFF84BDCE),
                   ),
                   alignment: Alignment.bottomCenter,
                 ),
@@ -71,7 +75,7 @@ class HomePage extends StatelessWidget {
                             elevation: 8,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(32)),
-                            color: Color(0xffE5f5f3),
+                            color: consejos[index].backgroundColor,
                             child: Padding(
                               padding: const EdgeInsets.all(32.0),
                               child: Column(
@@ -83,7 +87,7 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontFamily: 'Avenir',
                                           fontSize: 24,
-                                          color: Colors.black,
+                                          color: isDarkMode? Colors.white :Colors.black,
                                           fontWeight: FontWeight.w900),
                                           textAlign: TextAlign.center,
                                     ),
@@ -94,32 +98,32 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontFamily: 'Avenir',
                                           fontSize: 18,
-                                          color: Colors.black,
+                                          color: isDarkMode? Colors.white :Colors.black,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(height: 50),
-                                    /* Row(
+                                    Row(
                                       children: <Widget>[
                                         Text(
                                           'Mas información',
                                           style: TextStyle(
                                               fontFamily: 'Avenir',
                                               fontSize: 16,
-                                              color: Colors.black,
+                                              color: isDarkMode? Colors.white :Colors.black,
                                               fontWeight: FontWeight.w500),
                                           textAlign: TextAlign.right,
                                         ),
                                         Icon(Icons.arrow_forward)
                                       ],
-                                    ) */
+                                    )
                                   ]),
                             ),
                           )
                         ],
                       ),
-                      Hero(
+                      /* Hero(
                         tag: consejos[index].position,
-                        child: Image.asset(consejos[index].iconImage))
+                        child: Image.asset(consejos[index].iconImage)) */
                     ]),
                   );
                 },

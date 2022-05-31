@@ -18,6 +18,9 @@ class _RegistrationState extends State<Registration> {
   final passwordController = new TextEditingController();
   final confirmPasswordController = new TextEditingController();
   final birthdayController = new TextEditingController();
+  final genderController = new TextEditingController();
+  int gender = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +114,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_today),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'dd/mm/yyyy',
+        hintText: 'Day of birth',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onTap: () async {
@@ -128,6 +131,34 @@ class _RegistrationState extends State<Registration> {
           //print("Date is not selected");
         }
       },
+    );
+     final genderField = Column(
+      children: <Widget>[
+        ListTile(
+          title: const Text('Male'),
+          leading: Radio(
+            value: 1,
+            groupValue: gender,
+            onChanged: (value) {
+              setState(() {
+                gender = value as int;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Female'),
+          leading: Radio(
+            value: 2,
+            groupValue: gender,
+            onChanged: (value) {
+              setState(() {
+                gender =value as int;
+              });
+            },
+          ),
+        ),
+      ],
     );
 
     final signUpButton = Material(
@@ -152,7 +183,7 @@ class _RegistrationState extends State<Registration> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.blue),
+          icon: Icon(Icons.arrow_back, color: Color(0xFF84BDCE)),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -189,6 +220,16 @@ class _RegistrationState extends State<Registration> {
                     confirmPasswordField,
                     SizedBox(height: 20),
                     birthdayField,
+                    SizedBox(height: 30),
+                    Text(
+                      'Select your gender: ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF84BDCE),                      
+                      ),
+                      ),
+                    genderField,
                     SizedBox(height: 45),
                     signUpButton,
                     SizedBox(height: 15),
