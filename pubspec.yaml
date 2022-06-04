@@ -49,6 +49,8 @@ dependencies:
   flutter_typeahead: ^4.0.0
   faker: ^2.0.0
   flutter_swiper: ^1.1.6
+  fluttertoast: ^8.0.9
+  firebase_auth: ^3.3.19
 
 dev_dependencies:
   flutter_test:

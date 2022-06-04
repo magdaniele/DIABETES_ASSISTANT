@@ -2,7 +2,9 @@
 
 import 'package:diabetes_assistant/pages/signUp.dart';
 import 'package:diabetes_assistant/privatePages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
@@ -17,14 +19,26 @@ class _LoginState extends State<Login> {
 
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
+    final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      onSubmitted: (value) {
-        emailController.text = value;
+      validator:(value){
+        if(value!.isEmpty){
+          return ("Please Enter Your Email");
+        }
+        if(!RegExp("^[a-zA-Z0-9+_.-]+@.[a-z]").hasMatch(value))
+        {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        emailController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -35,12 +49,22 @@ class _LoginState extends State<Login> {
       ),
     );
 
-    final passwordField = TextField(
+    final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
       obscureText: true,
-      onSubmitted: (value) {
-        passwordController.text = value;
+      validator: (value){
+        RegExp regex = new RegExp(r'^.{6,}');
+        if(value!.isEmpty){
+          return ('Please enter your password');
+        }
+        if(!regex.hasMatch(value)){
+          return ("Please enter a valid Password(Min. 6 Character");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        passwordController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -59,8 +83,7 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          signIn(emailController.text, passwordController.text);
         },
         child: Text(
           'Login',
@@ -127,6 +150,21 @@ class _LoginState extends State<Login> {
       )),
     );
   }
+
+void signIn(String email, String password) async {
+ if (_formKey.currentState!.validate()) {
+   await _auth.signInWithEmailAndPassword(email: email, password: password)
+   .then((uid) => {
+    Fluttertoast.showToast(msg: "Login Succesfull"),
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => HomePage())))
+   }).catchError((e){
+    
+    Fluttertoast.showToast(msg: e!.message);
+
+   });
+ }
+}
+
 }
 
 class LoginGet extends StatelessWidget {
