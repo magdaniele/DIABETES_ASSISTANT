@@ -15,77 +15,79 @@ class DietPage extends StatefulWidget {
 }
 
 class _DietPageState extends State<DietPage> {
-  List<charts.Series<Sales, int>> _seriesLineData = [];
+  List<charts.Series<GlucoseTest, DateTime>> _seriesLineData = [];
   final _formKey = GlobalKey<FormState>();
   final glucoseController = new TextEditingController();
+  var glucoseData = [
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 85),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 95),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 80),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 110),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 78),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 92),
+  ];
+  var line1 = [
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 125),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 125),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 125),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 125),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 125),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 125),
+  ];
+  var line2 = [
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 100),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 100),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 100),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 100),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 100),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 100),
+  ];
+  var line3 = [
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 70),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 70),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 70),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 70),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 70),
+    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 70),
+  ];
   _generateData() {
-    var linesalesdata = [
-      new Sales(0, 85),
-      new Sales(1, 95),
-      new Sales(2, 80),
-      new Sales(3, 110),
-      new Sales(4, 78),
-      new Sales(5, 92),
-    ];
-    var linesalesdata1 = [
-      new Sales(0, 125),
-      new Sales(1, 125),
-      new Sales(2, 125),
-      new Sales(3, 125),
-      new Sales(4, 125),
-      new Sales(5, 125),
-    ];
-    var linesalesdata2 = [
-      new Sales(0, 100),
-      new Sales(1, 100),
-      new Sales(2, 100),
-      new Sales(3, 100),
-      new Sales(4, 100),
-      new Sales(5, 100),
-    ];
-
-    var linesalesdata3 = [
-      new Sales(0, 70),
-      new Sales(1, 70),
-      new Sales(2, 70),
-      new Sales(3, 70),
-      new Sales(4, 70),
-      new Sales(5, 70),
-    ];
     _seriesLineData.add(
       charts.Series(
         colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.blueAccent),
         id: 'Constant',
-        data: linesalesdata,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
+        data: glucoseData,
+        domainFn: (GlucoseTest test, _) => test.date,
+        measureFn: (GlucoseTest test, _) => test.value,
       ),
     );
     _seriesLineData.add(
       charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color.fromARGB(255, 223, 168, 50)),
+        colorFn: (__, _) =>
+            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 223, 168, 50)),
         id: 'Constant1',
-        data: linesalesdata1,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
+        data: line1,
+        domainFn: (GlucoseTest test, _) => test.date,
+        measureFn: (GlucoseTest test, _) => test.value,
       ),
     );
     _seriesLineData.add(
       charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color.fromARGB(255, 70, 223, 50)),
+        colorFn: (__, _) =>
+            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 70, 223, 50)),
         id: 'Constant2',
-        data: linesalesdata2,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
+        data: line2,
+        domainFn: (GlucoseTest test, _) => test.date,
+        measureFn: (GlucoseTest test, _) => test.value,
       ),
     );
     _seriesLineData.add(
       charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color.fromARGB(255, 70, 223, 50)),
+        colorFn: (__, _) =>
+            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 70, 223, 50)),
         id: 'Constant3',
-        data: linesalesdata3,
-        domainFn: (Sales sales, _) => sales.yearval,
-        measureFn: (Sales sales, _) => sales.salesval,
+        data: line3,
+        domainFn: (GlucoseTest test, _) => test.date,
+        measureFn: (GlucoseTest test, _) => test.value,
       ),
     );
   }
@@ -98,11 +100,10 @@ class _DietPageState extends State<DietPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     final glucoseField = TextField(
       autofocus: false,
       controller: glucoseController,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.number,
       onSubmitted: (value) {
         glucoseController.text = value;
       },
@@ -115,14 +116,30 @@ class _DietPageState extends State<DietPage> {
       ),
     );
 
-    final submitButton =  Material(
+    final submitButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: Color(0xFF84BDCE),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          int? glucose = int.tryParse(glucoseController.text);
+          if (glucose == null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Este valor no es un número válido.",
+                  style: TextStyle(fontSize: 16)),
+            ));
+          } else {
+            setState(() {
+              glucoseData.add(GlucoseTest(DateTime.now(), glucose));
+              line1.add(GlucoseTest(DateTime.now(), 125));
+              line2.add(GlucoseTest(DateTime.now(), 100));
+              line3.add(GlucoseTest(DateTime.now(), 70));
+            });
+            glucoseController.text = "";
+          }
+        },
         child: Text(
           'Añadir',
           textAlign: TextAlign.center,
@@ -142,9 +159,10 @@ class _DietPageState extends State<DietPage> {
             bottom: TabBar(
               indicatorColor: Color(0xFF84BDCE),
               tabs: const [
-                Tab(icon: Icon(FontAwesomeIcons.crutch),),
-                Tab(icon: Icon(FontAwesomeIcons.chartLine),),
-              ]),
+                Tab(icon: Icon(FontAwesomeIcons.crutch)),
+                Tab(icon: Icon(FontAwesomeIcons.chartLine)),
+              ],
+            ),
           ),
           drawer: const NavigationDrawer(),
           body: TabBarView(
@@ -168,7 +186,7 @@ class _DietPageState extends State<DietPage> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   SizedBox(
-                                    height: 300,
+                                    height: 200,
                                     child: Image.asset(
                                       'assets/big_logo.png',
                                       fit: BoxFit.contain,
@@ -200,7 +218,7 @@ class _DietPageState extends State<DietPage> {
                               fontSize: 24.0, fontWeight: FontWeight.bold),
                         ),
                         Expanded(
-                          child: charts.LineChart(_seriesLineData,
+                          child: charts.TimeSeriesChart(_seriesLineData,
                               defaultRenderer: new charts.LineRendererConfig(
                                   includeArea: false, stacked: false),
                               animate: true,
@@ -231,9 +249,9 @@ class _DietPageState extends State<DietPage> {
   }
 }
 
-class Sales {
-  int yearval;
-  int salesval;
+class GlucoseTest {
+  DateTime date;
+  int value;
 
-  Sales(this.yearval, this.salesval);
+  GlucoseTest(this.date, this.value);
 }

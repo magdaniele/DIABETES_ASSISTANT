@@ -11,7 +11,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:math';
 
 class Calculator extends StatefulWidget {
-  Calculator({Key? key}) : super(key: key);
+  const Calculator({Key? key}) : super(key: key);
 
   @override
   _CalculatorState createState() => _CalculatorState();
@@ -27,18 +27,18 @@ class _CalculatorState extends State {
   final foodController = TextEditingController();
   final weightController = TextEditingController();
   Map<String, List<Food>> foods = {
-    "Monday": [],
-    "Tuesday": [],
-    "Wednesday": [],
-    "Thursday": [],
-    "Friday": [],
-    "Saturday": [],
-    "Sunday": [],
+    "Lunes": [],
+    "Martes": [],
+    "Miércoles": [],
+    "Jueves": [],
+    "Viernes": [],
+    "Sábado": [],
+    "Domingo": [],
   };
   late String selectedDay = foods.keys.elementAt(DateTime.now().weekday - 1);
 
-  late double Function() totalCalories = () =>
-      foods[selectedDay]!.fold<double>(0, (a, b) => a + b.calories / b.weight);
+  late double Function() totalCalories = () => foods[selectedDay]!
+      .fold<double>(0, (a, b) => a + b.calories * b.weight / 100);
   late double Function() totalCarbohydrates = () => foods[selectedDay]!
       .fold<double>(0, (a, b) => a + b.carbohydrates * b.weight / 100);
 
@@ -48,7 +48,7 @@ class _CalculatorState extends State {
       child: Builder(
         builder: (context) => Scaffold(
           appBar: AppBar(
-            title: const Text('Calculator'),
+            title: const Text('Calculadora'),
             backgroundColor: const Color(0xFF8215466),
           ),
           drawer: const NavigationDrawer(),
@@ -64,7 +64,7 @@ class _CalculatorState extends State {
                       SizedBox(
                           width: 100,
                           child: Text(
-                            "Max. Recommended Calories",
+                            "Max. Calorías Recomendadas",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 10,
@@ -78,7 +78,7 @@ class _CalculatorState extends State {
                       SizedBox(
                           width: 100,
                           child: Text(
-                            "Max. Recommended Carbohydrates",
+                            "Max. Carbohidratos Recomendados",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 10,
@@ -131,11 +131,11 @@ class _CalculatorState extends State {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                  "Total weight: ${food.weight.toStringAsFixed(2)} g"),
+                                  "Peso a comer: ${food.weight.toStringAsFixed(2)} g"),
                               Text(
-                                  "Calories: ${(food.carbohydrates / food.weight).toStringAsFixed(2)} kcal (${food.calories.toStringAsFixed(2)} kcal/g)"),
+                                  "Calorías: ${(food.carbohydrates * food.weight / 100).toStringAsFixed(2)} kcal (${(food.calories / 100).toStringAsFixed(2)} kcal/g)"),
                               Text(
-                                  "Carbohydrates: ${(food.carbohydrates * food.weight / 100).toStringAsFixed(2)} g (${food.carbohydrates.toStringAsFixed(2)}%)"),
+                                  "Carbohidratos: ${(food.carbohydrates * food.weight / 100).toStringAsFixed(2)} g (${food.carbohydrates.toStringAsFixed(2)}%)"),
                             ],
                           ),
                         ));
@@ -152,7 +152,7 @@ class _CalculatorState extends State {
                       padding: EdgeInsets.all(20),
                       child: Column(children: [
                         Text(
-                          "Total Calories",
+                          "Calorías Totales",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text("${totalCalories().toStringAsFixed(2)} kcal",
@@ -163,7 +163,7 @@ class _CalculatorState extends State {
                       padding: EdgeInsets.all(20),
                       child: Column(children: [
                         Text(
-                          "Total Carbohydrates",
+                          "Carbohidratos Totales",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
@@ -186,7 +186,7 @@ class _CalculatorState extends State {
                       keyboardType: TextInputType.number,
                       controller: weightController,
                       decoration: const InputDecoration(
-                        label: Text('Weight (grams)'),
+                        label: Text('Peso (gramos)'),
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -204,7 +204,8 @@ class _CalculatorState extends State {
                         ));
                       } else if (carbohydratesMax <
                               totalCarbohydrates() + carbs * weight / 100 ||
-                          caloriesMax < totalCalories() + calories / weight) {
+                          caloriesMax <
+                              totalCalories() + calories * weight / 100) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               "No puedes agregar este plato porque está por encima de tu límite diario recomendado.",
@@ -243,7 +244,7 @@ class _CalculatorState extends State {
       textFieldConfiguration: TextFieldConfiguration(
         controller: foodController,
         decoration: const InputDecoration(
-          label: Text('Dishes'),
+          label: Text('Platos'),
           border: OutlineInputBorder(),
         ),
       ),

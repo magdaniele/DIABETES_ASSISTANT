@@ -46,13 +46,13 @@ class NavigationDrawer extends StatelessWidget {
                   height: 24,
                 ),
                 CircleAvatar(
-                    radius: 51.5,
-                    backgroundColor: Colors.black,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(user.imagePath),
-                      radius: 50.0,
-                    ),
-                    ),
+                  radius: 51.5,
+                  backgroundColor: Colors.black,
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(user.imagePath),
+                    radius: 50.0,
+                  ),
+                ),
                 SizedBox(
                   height: 12,
                 ),
@@ -101,8 +101,9 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) =>DietPage(child: build(context),))
-                  );
+                MaterialPageRoute(
+                    builder: (context) => DietPage(child: build(context))),
+              );
             },
           ),
           ListTile(
@@ -111,18 +112,18 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Alarm())
-                  );
+                MaterialPageRoute(builder: (context) => Alarm()),
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.calculate_outlined),
-            title: const Text('Calculator'),
+            title: const Text('Calculadora'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Calculator())
-                  );
+                MaterialPageRoute(builder: (context) => Calculator()),
+              );
             },
           ),
           ListTile(
@@ -131,8 +132,8 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Appointment())
-                  );
+                MaterialPageRoute(builder: (context) => Appointment()),
+              );
             },
           ),
           const Divider(color: Colors.black),
@@ -142,8 +143,8 @@ class NavigationDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Login())
-                  );
+                MaterialPageRoute(builder: (context) => Login()),
+              );
             },
           ),
         ],
