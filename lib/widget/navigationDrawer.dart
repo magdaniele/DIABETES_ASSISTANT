@@ -10,6 +10,7 @@ import 'package:diabetes_assistant/privatePages/home.dart';
 import 'package:diabetes_assistant/privatePages/profile.dart';
 import 'package:diabetes_assistant/privatePages/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -138,13 +139,13 @@ class NavigationDrawer extends StatelessWidget {
           ),
           const Divider(color: Colors.black),
           ListTile(
-            leading: const Icon(Icons.settings_outlined),
+            leading: const Icon(Icons.logout),
             title: const Text('Log Out'),
             onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => Login()),
-              );
+              FirebaseAuth.instance.signOut().then((value) => {
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: ((context) => Login())))
+                  });
             },
           ),
         ],
