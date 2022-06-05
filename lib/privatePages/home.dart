@@ -18,7 +18,9 @@ class HomePage extends StatelessWidget {
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(
-                title: const Text('Home'), backgroundColor: Color(0xFF8215466)),
+              title: const Text('Diabetes Assistant'),
+              backgroundColor: Color(0xFF8215466),
+            ),
             drawer: const NavigationDrawer(),
             body: _homePage(context),
           ),
@@ -38,32 +40,40 @@ class HomePage extends StatelessWidget {
                   'Consejos',
                   style: TextStyle(
                       fontFamily: 'Avenir',
-                      fontSize: 40,
-                      color: isDarkMode?  Color.fromARGB(248, 222, 237, 243) : Color(0xFF8215466),
+                      fontSize: 30,
+                      color: isDarkMode
+                          ? Color.fromARGB(248, 222, 237, 243)
+                          : Color(0xFF8215466),
                       fontWeight: FontWeight.w900),
                 )
               ]),
             ),
             Container(
-              height: MediaQuery.of(context).size.height- 4 * 64,
-              padding: const EdgeInsets.only(left: 32),
+              height: MediaQuery.of(context).size.height - 4 * 64,
+              padding: const EdgeInsets.only(left: 32, top: 32),
               child: Swiper(
                 itemCount: consejos.length,
                 itemWidth: MediaQuery.of(context).size.width - 2 * 64,
                 layout: SwiperLayout.STACK,
                 pagination: SwiperPagination(
+                  margin: EdgeInsets.only(right: 32),
                   builder: DotSwiperPaginationBuilder(
                     activeSize: 15,
                     space: 8,
                     activeColor: Color(0XFF215466),
                     color: Color(0xFF84BDCE),
                   ),
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment.topCenter,
                 ),
                 itemBuilder: (context, index) {
-                  return InkWell(
+                  return SingleChildScrollView(
+                      child: InkWell(
                     onTap: () {
-                      Navigator.push(context, PageRouteBuilder(pageBuilder: (context,a,b)=>DetailPage(consejo: consejos[index])));
+                      Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                              pageBuilder: (context, a, b) =>
+                                  DetailPage(consejo: consejos[index])));
                     },
                     child: Stack(children: <Widget>[
                       Column(
@@ -87,9 +97,11 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontFamily: 'Avenir',
                                           fontSize: 24,
-                                          color: isDarkMode? Colors.white :Colors.black,
+                                          color: isDarkMode
+                                              ? Colors.white
+                                              : Colors.black,
                                           fontWeight: FontWeight.w900),
-                                          textAlign: TextAlign.center,
+                                      textAlign: TextAlign.center,
                                     ),
                                     SizedBox(height: 32),
                                     Text(
@@ -98,7 +110,9 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                           fontFamily: 'Avenir',
                                           fontSize: 18,
-                                          color: isDarkMode? Colors.white :Colors.black,
+                                          color: isDarkMode
+                                              ? Colors.white
+                                              : Colors.black,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(height: 50),
@@ -109,7 +123,9 @@ class HomePage extends StatelessWidget {
                                           style: TextStyle(
                                               fontFamily: 'Avenir',
                                               fontSize: 16,
-                                              color: isDarkMode? Colors.white :Colors.black,
+                                              color: isDarkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
                                               fontWeight: FontWeight.w500),
                                           textAlign: TextAlign.right,
                                         ),
@@ -125,7 +141,7 @@ class HomePage extends StatelessWidget {
                         tag: consejos[index].position,
                         child: Image.asset(consejos[index].iconImage)) */
                     ]),
-                  );
+                  ));
                 },
               ),
             )

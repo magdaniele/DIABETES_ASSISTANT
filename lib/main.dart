@@ -11,12 +11,17 @@ import 'package:diabetes_assistant/pages/login.dart';
 import 'package:diabetes_assistant/themes.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'privatePages/home.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   var initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   var initializationSettingsIOS = IOSInitializationSettings(
@@ -48,8 +53,17 @@ class MyApp extends StatelessWidget {
                   theme: user.isDarkMode
                       ? MyThemes.darkTheme
                       : MyThemes.lightTheme,
-                  title: 'Login Demo',
-                  home: Login(),
+                  title: 'Diabetes Assistant',
+                  home: StreamBuilder<User?>(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (BuildContext context, snapshot) {
+                      if (snapshot.hasData && (!snapshot.data!.isAnonymous)) {
+                        return HomePage();
+                      } else {
+                        return Login();
+                      }
+                    },
+                  ),
                   scrollBehavior: ScrollBehavior(),
                 )));
   }
