@@ -9,7 +9,7 @@ class NumbersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User user = userPreferences.myUser;
+    UserModel user = userPreferences.myUser;
     return IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

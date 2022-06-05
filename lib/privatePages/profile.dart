@@ -16,7 +16,7 @@ class userProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const user = userPreferences.myUser;
+   UserModel user = userPreferences.myUser;
     return ThemeSwitchingArea(
         child: Builder(
             builder: (context) => Scaffold(
@@ -28,7 +28,7 @@ class userProfile extends StatelessWidget {
                         height: 24,
                       ),
                       ProfileWidget(
-                        imagePath: user.imagePath,
+                        imagePath: user.imagePath!,
                         onClicked: () async {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -56,22 +56,22 @@ class userProfile extends StatelessWidget {
                       buildAbout(user),
                     ],
                   ),
-              drawer: const NavigationDrawer()
+              drawer: NavigationDrawer()
                 ),
                 ));
   }
 
-  Widget buildName(User user) => Column(
+  Widget buildName(UserModel user) => Column(
         children: [
           Text(
-            user.name,
+            user.firstName!+' '+user.secondName!,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(
             height: 4,
           ),
           Text(
-            user.email,
+            user.email!,
             style: TextStyle(color: Colors.grey),
           )
         ],
@@ -82,7 +82,7 @@ class userProfile extends StatelessWidget {
         onClicked: () {},
       );
 
-  Widget buildAbout(User user) => Container(
+  Widget buildAbout(UserModel user) => Container(
       padding: EdgeInsets.symmetric(horizontal: 48),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
@@ -96,7 +96,7 @@ class userProfile extends StatelessWidget {
           height: 16,
         ),
         Text(
-          user.about,
+          user.about!,
           style: TextStyle(fontSize: 16, height: 1.4),
         )
       ]));

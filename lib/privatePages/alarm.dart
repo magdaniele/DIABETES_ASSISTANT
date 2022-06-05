@@ -25,7 +25,7 @@ class Alarm extends StatelessWidget {
             title: const Text('Alarm'),
             backgroundColor: const Color(0xff8215466),
           ),
-          drawer: const NavigationDrawer(),
+          drawer: NavigationDrawer(),
           body: Container(
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 48),
             child: Column(

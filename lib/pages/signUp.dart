@@ -1,5 +1,10 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new, file_names
+// ignore_for_file: prefer_const_constructors, unnecessary_new, file_names, import_of_legacy_library_into_null_safe, unnecessary_null_comparison
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diabetes_assistant/model/user.dart';
+import 'package:diabetes_assistant/privatePages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 class Registration extends StatefulWidget {
@@ -18,18 +23,27 @@ class _RegistrationState extends State<Registration> {
   final passwordController = new TextEditingController();
   final confirmPasswordController = new TextEditingController();
   final birthdayController = new TextEditingController();
-  final genderController = new TextEditingController();
-  int gender = 0;
-
+  String gender = '';
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    final firstNameField = TextField(
+    final firstNameField = TextFormField(
       autofocus: false,
       controller: firstNameController,
       keyboardType: TextInputType.name,
-      onSubmitted: (value) {
-        firstNameController.text = value;
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{3,}');
+        if (value!.isEmpty) {
+          return ("First name cannot be empty");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Please enter a valid Name(Min. 3 Character");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        firstNameController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -40,12 +54,18 @@ class _RegistrationState extends State<Registration> {
       ),
     );
 
-    final secondNameField = TextField(
+    final secondNameField = TextFormField(
       autofocus: false,
       controller: secondNameController,
       keyboardType: TextInputType.name,
-      onSubmitted: (value) {
-        secondNameController.text = value;
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Second name cannot be empty");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        secondNameController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -56,12 +76,21 @@ class _RegistrationState extends State<Registration> {
       ),
     );
 
-    final emailField = TextField(
+    final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      onSubmitted: (value) {
-        emailController.text = value;
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@.[a-z]").hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        emailController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -72,12 +101,22 @@ class _RegistrationState extends State<Registration> {
       ),
     );
 
-    final passwordField = TextField(
+    final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
       obscureText: true,
-      onSubmitted: (value) {
-        passwordController.text = value;
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{6,}');
+        if (value!.isEmpty) {
+          return ('Please enter your password');
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Please enter a valid Password(Min. 6 Character");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        passwordController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -87,12 +126,18 @@ class _RegistrationState extends State<Registration> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
-    final confirmPasswordField = TextField(
+    final confirmPasswordField = TextFormField(
       autofocus: false,
       controller: confirmPasswordController,
       obscureText: true,
-      onSubmitted: (value) {
-        confirmPasswordController.text = value;
+      validator: (value) {
+        if (passwordController.text != confirmPasswordController.text) {
+          return ('Password dont match');
+        }
+        return null;
+      },
+      onSaved: (value) {
+        confirmPasswordController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -102,13 +147,19 @@ class _RegistrationState extends State<Registration> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
-    final birthdayField = TextField(
+    final birthdayField = TextFormField(
       autofocus: false,
       controller: birthdayController,
       readOnly: true,
       obscureText: false,
-      onSubmitted: (value) {
-        birthdayController.text = value;
+      validator: (value) {
+        if (birthdayController.text == '') {
+          return ('Please enter a birth day');
+        }
+        return null;
+      },
+      onSaved: (value) {
+        birthdayController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -127,39 +178,36 @@ class _RegistrationState extends State<Registration> {
           String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
           birthdayController.text = formattedDate; //
         } else {
-          birthdayController.text='';
+          birthdayController.text = '';
           //print("Date is not selected");
         }
       },
     );
-     final genderField = Column(
-      children: <Widget>[
-        ListTile(
-          title: const Text('Male'),
-          leading: Radio(
-            value: 1,
+    final genderField = Column(
+      children: [
+      ListTile(
+        title: Text("Male"),
+        leading: Radio(
+            value: "Hombre",
             groupValue: gender,
             onChanged: (value) {
               setState(() {
-                gender = value as int;
+                gender = value.toString();
               });
-            },
-          ),
-        ),
-        ListTile(
-          title: const Text('Female'),
-          leading: Radio(
-            value: 2,
+            }),
+      ),
+      ListTile(
+        title: Text("Female"),
+        leading: Radio(
+            value: "Mujer",
             groupValue: gender,
             onChanged: (value) {
               setState(() {
-                gender =value as int;
+                gender = value.toString();
               });
-            },
-          ),
-        ),
-      ],
-    );
+            }),
+      )
+    ]);
 
     final signUpButton = Material(
       elevation: 5,
@@ -168,7 +216,13 @@ class _RegistrationState extends State<Registration> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          if (gender != '') {
+            signUp(emailController.text, passwordController.text);
+          } else {
+            Fluttertoast.showToast(msg: 'Select a gender pls');
+          }
+        },
         child: Text(
           'Sign UP',
           textAlign: TextAlign.center,
@@ -226,9 +280,9 @@ class _RegistrationState extends State<Registration> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF84BDCE),                      
+                        color: Color(0xFF84BDCE),
                       ),
-                      ),
+                    ),
                     genderField,
                     SizedBox(height: 45),
                     signUpButton,
@@ -239,5 +293,47 @@ class _RegistrationState extends State<Registration> {
         ),
       )),
     );
+  }
+
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {postDetailsToFirestrore()})
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
+
+  postDetailsToFirestrore() async {
+    //calling our firestore
+    //calling our user model
+    //sending these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel(
+        uid: user!.uid,
+        firstName: firstNameController.text,
+        secondName: secondNameController.text,
+        email: user.email,
+        imagePath: '',
+        about: '',
+        birthday: birthdayController.text,
+        height: 0,
+        weight: 0,
+        gender: gender,
+        isDarkMode: false);
+
+    await firebaseFirestore
+        .collection('users')
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(msg: 'Account created successfully');
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
   }
 }
