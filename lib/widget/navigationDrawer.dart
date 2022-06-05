@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+  NavigationDrawer({Key? key}) : super(key: key);
   final user = userPreferences.myUser;
   @override
   Widget build(BuildContext context) => Drawer(
@@ -49,7 +49,7 @@ class NavigationDrawer extends StatelessWidget {
                   radius: 51.5,
                   backgroundColor: Colors.black,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage(user.imagePath),
+                    backgroundImage: AssetImage(user.imagePath!),
                     radius: 50.0,
                   ),
                 ),
@@ -57,11 +57,11 @@ class NavigationDrawer extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  user.name,
+                  user.firstName! +' '+user.secondName!,
                   style: TextStyle(fontSize: 28, color: Colors.white),
                 ),
                 Text(
-                  user.email,
+                  user.email!,
                   style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
                 SizedBox(

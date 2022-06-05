@@ -164,7 +164,7 @@ class _DietPageState extends State<DietPage> {
               ],
             ),
           ),
-          drawer: const NavigationDrawer(),
+          drawer: NavigationDrawer(),
           body: TabBarView(
             children: [
               Padding(

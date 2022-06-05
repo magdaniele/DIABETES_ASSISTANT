@@ -51,7 +51,7 @@ class _CalculatorState extends State {
             title: const Text('Calculadora'),
             backgroundColor: const Color(0xFF8215466),
           ),
-          drawer: const NavigationDrawer(),
+          drawer: NavigationDrawer(),
           body: Padding(
             padding: EdgeInsets.all(20),
             child: Column(children: [

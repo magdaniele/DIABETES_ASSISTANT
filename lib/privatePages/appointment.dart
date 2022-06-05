@@ -35,7 +35,7 @@ class Appointment extends StatelessWidget {
         title: const Text('Chat with your doctor'),
         backgroundColor: const Color(0xFF8215466),
       ),
-      drawer: const NavigationDrawer(),
+      drawer: NavigationDrawer(),
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,

@@ -10,6 +10,7 @@ import 'package:diabetes_assistant/pages/login.dart';
 //import 'package:diabetes_assistant/privatePages/profile.dart';
 import 'package:diabetes_assistant/themes.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -17,6 +18,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
   var initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   var initializationSettingsIOS = IOSInitializationSettings(

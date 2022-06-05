@@ -15,7 +15,7 @@ class EditUserProfile extends StatefulWidget {
 }
 
 class _EditUserProfileState extends State<EditUserProfile> {
-  User user = userPreferences.myUser;
+  UserModel user = userPreferences.myUser;
   late PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
   bool _load = false;
@@ -55,7 +55,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               ),
               TextFieldWidget(
                 label: 'Full Name',
-                text: user.name,
+                text: user.firstName!+' '+user.secondName!,
                 onChanged: (name) {},
               ),
               const SizedBox(
@@ -63,7 +63,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               ),
               TextFieldWidget(
                 label: 'Email',
-                text: user.email,
+                text: user.email!,
                 onChanged: (email) {},
               ),
               const SizedBox(
@@ -71,7 +71,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               ),
               TextFieldWidget(
                 label: 'About',
-                text: user.about,
+                text: user.about!,
                 maxLines: 5,
                 onChanged: (about) {},
               ),
@@ -146,7 +146,7 @@ void takePicture(ImageSource source) async {
     return Container(
       child: _load ==true?
         ProfileWidget(
-                        imagePath: user.imagePath,
+                        imagePath: user.imagePath!,
                         onClicked: () async {
                           showModalBottomSheet(
                       context: context, 
@@ -157,7 +157,7 @@ void takePicture(ImageSource source) async {
                         fileImage: _imageFile.path,)
                         :
     ProfileWidget(
-                        imagePath: user.imagePath,
+                        imagePath: user.imagePath!,
                         onClicked: () async {
                           showModalBottomSheet(
                       context: context, 
