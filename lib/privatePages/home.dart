@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               title: const Text('Diabetes Assistant'),
               backgroundColor: Color(0xFF8215466),
             ),
-            drawer: const NavigationDrawer(),
+            drawer:  NavigationDrawer(),
             body: _homePage(context),
           ),
         ),

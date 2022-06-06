@@ -2,17 +2,10 @@
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/pages/login.dart';
-//import 'package:diabetes_assistant/privatePages/home.dart';
-//import 'package:diabetes_assistant/privatePages/diet.dart';
-//import 'package:diabetes_assistant/privatePages/alarm.dart';
-//import 'package:diabetes_assistant/privatePages/editUserProfile.dart';
-//import 'package:diabetes_assistant/privatePages/editUserProfile.dart';
-//import 'package:diabetes_assistant/privatePages/profile.dart';
 import 'package:diabetes_assistant/themes.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

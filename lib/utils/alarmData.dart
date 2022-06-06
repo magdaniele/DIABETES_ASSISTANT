@@ -1,9 +1,8 @@
  // ignore_for_file: prefer_const_constructors, file_names
 
  import 'package:diabetes_assistant/model/alarmInfo.dart';
-import 'package:diabetes_assistant/themes.dart';
 
 List<AlarmInfo> alarms =[
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), description: '8 mg insulina', gradientColors: GradientColors.sky),
-  AlarmInfo(DateTime.now().add(Duration(hours: 2)), description: '5 mg insulina', gradientColors: GradientColors.sea),
+  AlarmInfo(alarmDateTime: DateTime.now().add(Duration(hours: 1)), title: '8 mg insulina', gradientColorIndex: 1, isActive: true),
+  AlarmInfo(alarmDateTime: DateTime.now().add(Duration(hours: 2)), title: '5 mg insulina', gradientColorIndex: 2, isActive: true),
 ];

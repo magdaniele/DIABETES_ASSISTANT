@@ -1,7 +1,9 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, unused_local_variable
+// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, unused_local_variable, unused_field
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/main.dart';
+import 'package:diabetes_assistant/model/alarmInfo.dart';
+import 'package:diabetes_assistant/themes.dart';
 import 'package:diabetes_assistant/utils/alarmData.dart';
 import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -10,11 +12,34 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 
-class Alarm extends StatelessWidget {
+class Alarm extends StatefulWidget {
   const Alarm({Key? key}) : super(key: key);
+  @override
+  _Alarm createState() => _Alarm();
   //final User user = userPreferences.myUser;
   final icon = CupertinoIcons.moon_stars;
+}
+
+class _Alarm extends State<Alarm> {
+  DateTime? _alarmTime;
+  String? _alarmTimeString;
+  Future<List<AlarmInfo>>? _alarms;
+  List<AlarmInfo>? _currentAlarms;
+  bool isInstructionView = false;
+
+  @override
+  void initState() {
+    _alarmTime = DateTime.now();
+    loadAlarms();
+    super.initState();
+  }
+
+  void loadAlarms() {
+    _alarms = getAlarms();
+    if (mounted) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +47,7 @@ class Alarm extends StatelessWidget {
       child: Builder(
         builder: (context) => Scaffold(
           appBar: AppBar(
-            title: const Text('Alarm'),
+            title: const Text('Notificar medicamento'),
             backgroundColor: const Color(0xff8215466),
           ),
           drawer: NavigationDrawer(),
@@ -41,17 +66,19 @@ class Alarm extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     children: alarms.map<Widget>((alarm) {
+                      var alarmTime =
+                          DateFormat('hh:mm a').format(alarm.alarmDateTime!);
+                      var gradientColor = GradientTemplate
+                          .gradientTemplate[alarm.gradientColorIndex!].colors;
                       return Container(
                         margin: const EdgeInsets.only(bottom: 32),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
-                          gradient:
-                              LinearGradient(colors: alarm.gradientColors),
+                          gradient: LinearGradient(colors: gradientColor),
                           boxShadow: [
                             BoxShadow(
-                                color:
-                                    alarm.gradientColors.last.withOpacity(0.4),
+                                color: gradientColor.last.withOpacity(0.4),
                                 blurRadius: 8,
                                 spreadRadius: 2,
                                 offset: Offset(4, 4))
@@ -76,7 +103,7 @@ class Alarm extends StatelessWidget {
                                           width: 8,
                                         ),
                                         Text(
-                                          alarm.description,
+                                          alarm.title!,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontFamily: 'avenir'),
@@ -86,8 +113,12 @@ class Alarm extends StatelessWidget {
                                   ],
                                 ),
                                 Switch(
-                                  value: true,
-                                  onChanged: (bool value) {},
+                                  value: alarm.isActive!,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      alarm.isActive = value;
+                                    });
+                                  },
                                   activeColor: Colors.white,
                                 ),
                               ],
@@ -109,11 +140,12 @@ class Alarm extends StatelessWidget {
                                         fontFamily: 'avenir',
                                         fontWeight: FontWeight.w700,
                                         fontSize: 24)),
-                                Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: 24,
-                                  color: Colors.white,
-                                ),
+                                IconButton(
+                                    icon: Icon(Icons.delete),
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      deleteAlarm(alarm.alarmId!);
+                                    }),
                               ],
                             ),
                           ],
@@ -136,7 +168,86 @@ class Alarm extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 32, vertical: 8),
                             onPressed: () {
-                              scheduleAlarm();
+                              //scheduleAlarm();
+                              _alarmTimeString =
+                                  DateFormat('HH:mm').format(DateTime.now());
+                              showModalBottomSheet(
+                                useRootNavigator: true,
+                                context: context,
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(24),
+                                  ),
+                                ),
+                                builder: (context) {
+                                  return StatefulBuilder(
+                                    builder: (context, setModalState) {
+                                      return Container(
+                                        padding: const EdgeInsets.all(32),
+                                        color: const Color(0xffE5F3F5),
+                                        child: Column(
+                                          children: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(primary: const Color(0xff8215466)),
+                                              onPressed: () async {
+                                                var selectedTime =
+                                                    await showTimePicker(
+                                                  context: context,
+                                                  initialTime: TimeOfDay.now(),
+                                                );
+                                                if (selectedTime != null) {
+                                                  final now = DateTime.now();
+                                                  var selectedDateTime =
+                                                      DateTime(
+                                                          now.year,
+                                                          now.month,
+                                                          now.day,
+                                                          selectedTime.hour,
+                                                          selectedTime.minute);
+                                                  _alarmTime = selectedDateTime;
+                                                  setModalState(() {
+                                                    _alarmTimeString =
+                                                        DateFormat('HH:mm')
+                                                            .format(
+                                                                selectedDateTime);
+                                                  });
+                                                }
+                                              },
+                                              child: Text(
+                                                _alarmTimeString!,
+                                                style: TextStyle(fontSize: 32),
+                                              ),
+                                            ),
+                                            ListTile(
+                                              title: Text('Repeat'),
+                                              trailing:
+                                                  Icon(Icons.arrow_forward_ios),
+                                            ),
+                                            ListTile(
+                                              title: Text('Sound'),
+                                              trailing:
+                                                  Icon(Icons.arrow_forward_ios),
+                                            ),
+                                            ListTile(
+                                              title: Text('Title'),
+                                              trailing:
+                                                  Icon(Icons.arrow_forward_ios),
+                                            ),
+                                            FloatingActionButton.extended(
+                                              onPressed: onSaveAlarm,
+                                              icon: Icon(Icons.alarm),
+                                              label: Text('Save'),
+                                              foregroundColor: Colors.white,
+                                              backgroundColor: const Color(0xff8215466),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              );
                             },
                             child: Column(
                               children: <Widget>[
@@ -198,5 +309,34 @@ class Alarm extends StatelessWidget {
         'Ya es hora de que tomes 15 mg de insulina',
         scheduledNotificationDateTime,
         platfromChannelSpecifics);
+  }
+
+  Future<List<AlarmInfo>> getAlarms() async {
+    List<AlarmInfo> _alarms = [];
+    return _alarms;
+  }
+
+  void onSaveAlarm() {
+    DateTime scheduleAlarmDateTime;
+/*     if (_alarmTime.isAfter(DateTime.now()))
+      scheduleAlarmDateTime = _alarmTime;
+    else
+      scheduleAlarmDateTime = _alarmTime.add(Duration(days: 1));
+
+    var alarmInfo = AlarmInfo(
+      alarmDateTime: scheduleAlarmDateTime,
+      gradientColorIndex: _currentAlarms.length,
+      title: 'alarm',
+    );
+    _alarmHelper.insertAlarm(alarmInfo);
+    scheduleAlarm(scheduleAlarmDateTime, alarmInfo);
+    Navigator.pop(context);
+    loadAlarms(); */
+  }
+
+  void deleteAlarm(String id) {
+/*     _alarmHelper.delete(id);
+    //unsubscribe for notification
+    loadAlarms(); */
   }
 }
