@@ -3,7 +3,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/utils/foodData.dart';
 //import 'package:diabetes_assistant/model/user.dart';
 //import 'package:diabetes_assistant/themes.dart';
-import 'package:diabetes_assistant/utils/userPreferences.dart';
+//import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,6 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State {
   final rand = Random();
-  final user = userPreferences.myUser;
   final icon = CupertinoIcons.moon_stars;
   final caloriesMax = 2800;
   final carbohydratesMax = 350;

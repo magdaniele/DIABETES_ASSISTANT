@@ -3,9 +3,9 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:diabetes_assistant/widget/buildAppBar.dart';
 import 'package:diabetes_assistant/widget/profileWidget.dart';
-import 'package:diabetes_assistant/widget/textFieldWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../model/user.dart';
 
@@ -15,21 +15,149 @@ class EditUserProfile extends StatefulWidget {
 }
 
 class _EditUserProfileState extends State<EditUserProfile> {
-  UserModel user = userPreferences.myUser;
   late PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
+  late TextEditingController firstNameController;
+  late TextEditingController secondNameController;
+  late TextEditingController aboutController;
+  late TextEditingController weightController;
+  late TextEditingController heightController;
   bool _load = false;
-  
+
   @override
   Widget build(BuildContext context) {
-      final updateUser = Material(
+    UserModel user = Provider.of<UserPreferences>(context, listen: false).user!;
+    firstNameController = TextEditingController(text: user.firstName);
+    secondNameController = TextEditingController(text: user.secondName);
+    aboutController = TextEditingController(text: user.about);
+    weightController = TextEditingController(text: user.weight.toString());
+    heightController = TextEditingController(text: user.height.toString());
+
+    final firstNameField = TextFormField(
+      autofocus: false,
+      controller: firstNameController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("First name cannot be empty");
+        }
+        if (!RegExp(r'^.{3,}').hasMatch(value)) {
+          return ("Please enter a valid Name(Min. 3 Character");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        firstNameController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: 'First Name',
+      ),
+    );
+
+    final secondNameField = TextFormField(
+      autofocus: false,
+      controller: secondNameController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Second name cannot be empty");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        secondNameController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: 'Second Name',
+      ),
+    );
+
+    final heightField = TextFormField(
+      autofocus: false,
+      controller: heightController,
+      keyboardType: TextInputType.number,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Height");
+        }
+        if (!RegExp("^[0-9]+(.[0-9]+)?").hasMatch(value)) {
+          return ("Please Enter a valid height");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        heightController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.rule),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: 'Height',
+      ),
+    );
+
+    final weightField = TextFormField(
+      autofocus: false,
+      controller: weightController,
+      keyboardType: TextInputType.number,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Weight");
+        }
+        if (!RegExp("^[0-9]+(.[0-9]+)?").hasMatch(value)) {
+          return ("Please Enter a valid weight");
+        }
+        return null;
+      },
+      onSaved: (value) {
+        weightController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.scale),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: 'Weight',
+      ),
+    );
+
+    final aboutField = TextFormField(
+      autofocus: false,
+      controller: aboutController,
+      keyboardType: TextInputType.text,
+      onSaved: (value) {
+        aboutController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      maxLines: 5,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: 'About',
+      ),
+    );
+
+    final updateUser = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: Color(0xFF84BDCE),
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          Provider.of<UserPreferences>(context, listen: false).updateUser({
+            "firstName": firstNameController.text,
+            "secondName": secondNameController.text,
+            "about": aboutController.text,
+            "weight": double.parse(weightController.text),
+            "height": double.parse(heightController.text),
+          });
+          Navigator.of(context).pop();
+        },
         child: Text(
           'Save Data',
           textAlign: TextAlign.center,
@@ -39,68 +167,37 @@ class _EditUserProfileState extends State<EditUserProfile> {
       ),
     );
     return ThemeSwitchingArea(
-          child: Builder(
+      child: Builder(
         builder: (context) => Scaffold(
           appBar: buildAppBar(context),
           body: ListView(
             padding: EdgeInsets.symmetric(horizontal: 32),
             physics: BouncingScrollPhysics(),
             children: [
-              const SizedBox(
-                        height: 24,
-                      ),
-              imageProfile(),
-              const SizedBox(
-                height: 24,
-              ),
-              TextFieldWidget(
-                label: 'Full Name',
-                text: user.firstName!+' '+user.secondName!,
-                onChanged: (name) {},
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextFieldWidget(
-                label: 'Email',
-                text: user.email!,
-                onChanged: (email) {},
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextFieldWidget(
-                label: 'About',
-                text: user.about!,
-                maxLines: 5,
-                onChanged: (about) {},
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextFieldWidget(
-                label: 'Weight',
-                text: user.weight.toString(),
-                onChanged: (weight) {},
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextFieldWidget(
-                label: 'Height',
-                text: user.height.toString(),
-                onChanged: (height) {},
-              ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
+              imageProfile(user.imagePath! == ''
+                  ? 'assets/defaultProfileImg.jpg'
+                  : user.imagePath!),
+              const SizedBox(height: 24),
+              firstNameField,
+              const SizedBox(height: 24),
+              secondNameField,
+              const SizedBox(height: 24),
+              aboutField,
+              const SizedBox(height: 24),
+              weightField,
+              const SizedBox(height: 24),
+              heightField,
+              const SizedBox(height: 24),
               updateUser,
             ],
           ),
         ),
-      ));
-      }
-  Widget bottomSheet(){
+      ),
+    );
+  }
+
+  Widget bottomSheet() {
     return Container(
       height: 100,
       width: MediaQuery.of(context).size.width,
@@ -110,76 +207,78 @@ class _EditUserProfileState extends State<EditUserProfile> {
       ),
       child: Column(
         children: <Widget>[
-          Text('Choose Profile Picture',
-          style: TextStyle(fontSize: 20.0),),
-          SizedBox(height: 20,),
+          Text(
+            'Choose Profile Picture',
+            style: TextStyle(fontSize: 20.0),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton.icon(
-                onPressed: (){
-                  takePicture(ImageSource.camera);
-                }, 
-                icon: Icon(Icons.camera), 
-                label: Text('Camera')),
-                ElevatedButton.icon(
-                onPressed: (){
-                  takePicture(ImageSource.gallery);
-                }, 
-                icon: Icon(Icons.image), 
-                label: Text('Gallery')),
-                
+                  onPressed: () {
+                    takePicture(ImageSource.camera);
+                  },
+                  icon: Icon(Icons.camera),
+                  label: Text('Camera')),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    takePicture(ImageSource.gallery);
+                  },
+                  icon: Icon(Icons.image),
+                  label: Text('Gallery')),
             ],
           )
         ],
       ),
     );
-  }    
-void takePicture(ImageSource source) async {
-  final pickedFile = await _picker.getImage(source: source,);
-  setState(() {
-    _imageFile = pickedFile!;
-    _load = true;
-  });
-}
-  Widget imageProfile(){
-    return Container(
-      child: _load ==true?
-        ProfileWidget(
-                        imagePath: user.imagePath!,
-                        onClicked: () async {
-                          showModalBottomSheet(
-                      context: context, 
-                      builder: ((builder)=>bottomSheet()));
-                          
-                        },
-                        isPath: true,
-                        fileImage: _imageFile.path,)
-                        :
-    ProfileWidget(
-                        imagePath: user.imagePath!,
-                        onClicked: () async {
-                          showModalBottomSheet(
-                      context: context, 
-                      builder: ((builder)=>bottomSheet()));
-                          
-                        },
-                        isPath: false,
-    ),
-    );
   }
 
-    Widget buildEditButton(Color color) => buildCircle(
+  void takePicture(ImageSource source) async {
+    final pickedFile = await _picker.getImage(
+      source: source,
+    );
+    setState(() {
+      _imageFile = pickedFile!;
+      _load = true;
+    });
+  }
+
+  Widget imageProfile(imagePath) {
+    return Container(
+        child: _load
+            ? ProfileWidget(
+                imagePath: imagePath,
+                onClicked: () async {
+                  showModalBottomSheet(
+                      context: context, builder: ((builder) => bottomSheet()));
+                },
+                isPath: true,
+                fileImage: _imageFile.path,
+              )
+            : ProfileWidget(
+                imagePath: imagePath,
+                onClicked: () async {
+                  showModalBottomSheet(
+                      context: context, builder: ((builder) => bottomSheet()));
+                },
+                isPath: false,
+              ));
+  }
+
+  Widget buildEditButton(Color color) => buildCircle(
       color: Colors.white,
       all: 3,
       child: buildCircle(
-      color: const Color(0xFF84BDCE),
-      all: 8,
-      child: Icon(
-        Icons.edit ,
-        color: Colors.white,
-        size: 20,
-      ),
+        color: const Color(0xFF84BDCE),
+        all: 8,
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+          size: 20,
+        ),
       ));
 
   Widget buildCircle({

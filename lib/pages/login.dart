@@ -27,12 +27,11 @@ class _LoginState extends State<Login> {
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      validator:(value){
-        if(value!.isEmpty){
+      validator: (value) {
+        if (value!.isEmpty) {
           return ("Please Enter Your Email");
         }
-        if(!RegExp("^[a-zA-Z0-9+_.-]+@.[a-z]").hasMatch(value))
-        {
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@.[a-z]").hasMatch(value)) {
           return ("Please Enter a valid email");
         }
         return null;
@@ -53,12 +52,12 @@ class _LoginState extends State<Login> {
       autofocus: false,
       controller: passwordController,
       obscureText: true,
-      validator: (value){
+      validator: (value) {
         RegExp regex = new RegExp(r'^.{6,}');
-        if(value!.isEmpty){
+        if (value!.isEmpty) {
           return ('Please enter your password');
         }
-        if(!regex.hasMatch(value)){
+        if (!regex.hasMatch(value)) {
           return ("Please enter a valid Password(Min. 6 Character");
         }
         return null;
@@ -151,46 +150,63 @@ class _LoginState extends State<Login> {
     );
   }
 
-void signIn(String email, String password) async {
- if (_formKey.currentState!.validate()) {
-   await _auth.signInWithEmailAndPassword(email: email, password: password)
-   .then((uid) => {
-    Fluttertoast.showToast(msg: "Login Succesfull"),
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => HomePage())))
-   }).catchError((e){
-    
-    Fluttertoast.showToast(msg: e!.message);
-
-   });
- }
-}
-
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Succesfull"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((context) => HomePage())))
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
 }
 
 class LoginGet extends StatelessWidget {
   String url = "";
-  Future<String> res() async{
+  Future<String> res() async {
     var respuesta = await http.get(Uri.parse(url));
 
     print(respuesta.body);
     return respuesta.body;
   }
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: ElevatedButton(child: Text(""), onPressed: (){res();},),);
+    return Center(
+      child: ElevatedButton(
+        child: Text(""),
+        onPressed: () {
+          res();
+        },
+      ),
+    );
   }
-} 
+}
 
 class LoginPost extends StatelessWidget {
   String url = "";
-  Future<String> userLogin() async{
-    var respuesta = await http.post(Uri.parse(url),body: {"username":"name","password":"*****"});
+  Future<String> userLogin() async {
+    var respuesta = await http
+        .post(Uri.parse(url), body: {"username": "name", "password": "*****"});
 
     print(respuesta.body);
     return respuesta.body;
   }
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: ElevatedButton(child: Text(""), onPressed: (){userLogin();},),);
+    return Center(
+      child: ElevatedButton(
+        child: Text(""),
+        onPressed: () {
+          userLogin();
+        },
+      ),
+    );
   }
-} 
+}
