@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               title: const Text('Diabetes Assistant'),
               backgroundColor: Color(0xFF8215466),
             ),
-            drawer:  NavigationDrawer(),
+            drawer: NavigationDrawer(),
             body: _homePage(context),
           ),
         ),
@@ -48,103 +48,107 @@ class HomePage extends StatelessWidget {
                 )
               ]),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - 4 * 64,
-              padding: const EdgeInsets.only(left: 32, top: 32),
-              child: Swiper(
-                itemCount: consejos.length,
-                itemWidth: MediaQuery.of(context).size.width - 2 * 64,
-                layout: SwiperLayout.STACK,
-                pagination: SwiperPagination(
-                  margin: EdgeInsets.only(right: 32),
-                  builder: DotSwiperPaginationBuilder(
-                    activeSize: 15,
-                    space: 8,
-                    activeColor: Color(0XFF215466),
-                    color: Color(0xFF84BDCE),
-                  ),
-                  alignment: Alignment.topCenter,
-                ),
-                itemBuilder: (context, index) {
-                  return SingleChildScrollView(
-                      child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                              pageBuilder: (context, a, b) =>
-                                  DetailPage(consejo: consejos[index])));
-                    },
-                    child: Stack(children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Card(
-                            elevation: 8,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32)),
-                            color: consejos[index].backgroundColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(32.0),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(height: 100),
-                                    Text(
-                                      consejos[index].name,
-                                      style: TextStyle(
-                                          fontFamily: 'Avenir',
-                                          fontSize: 24,
-                                          color: isDarkMode
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.w900),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 32),
-                                    Text(
-                                      consejos[index].description,
-                                      maxLines: 4,
-                                      style: TextStyle(
-                                          fontFamily: 'Avenir',
-                                          fontSize: 18,
-                                          color: isDarkMode
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(height: 50),
-                                    Row(
-                                      children: <Widget>[
-                                        Text(
-                                          'Mas información',
-                                          style: TextStyle(
-                                              fontFamily: 'Avenir',
-                                              fontSize: 16,
-                                              color: isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                              fontWeight: FontWeight.w500),
-                                          textAlign: TextAlign.right,
-                                        ),
-                                        Icon(Icons.arrow_forward)
-                                      ],
-                                    )
-                                  ]),
-                            ),
-                          )
-                        ],
+            MediaQuery.of(context).size.height > 0
+                ? Container(
+                    height: MediaQuery.of(context).size.height - 4 * 64,
+                    padding: const EdgeInsets.only(left: 32, top: 32),
+                    child: Swiper(
+                      itemCount: consejos.length,
+                      itemWidth: MediaQuery.of(context).size.width - 2 * 64,
+                      layout: SwiperLayout.STACK,
+                      pagination: SwiperPagination(
+                        margin: EdgeInsets.only(right: 32),
+                        builder: DotSwiperPaginationBuilder(
+                          activeSize: 15,
+                          space: 8,
+                          activeColor: Color(0XFF215466),
+                          color: Color(0xFF84BDCE),
+                        ),
+                        alignment: Alignment.topCenter,
                       ),
-                      /* Hero(
+                      itemBuilder: (context, index) {
+                        return SingleChildScrollView(
+                            child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                    pageBuilder: (context, a, b) =>
+                                        DetailPage(consejo: consejos[index])));
+                          },
+                          child: Stack(children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Card(
+                                  elevation: 8,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32)),
+                                  color: consejos[index].backgroundColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(32.0),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(height: 100),
+                                          Text(
+                                            consejos[index].name,
+                                            style: TextStyle(
+                                                fontFamily: 'Avenir',
+                                                fontSize: 24,
+                                                color: isDarkMode
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontWeight: FontWeight.w900),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(height: 32),
+                                          Text(
+                                            consejos[index].description,
+                                            maxLines: 4,
+                                            style: TextStyle(
+                                                fontFamily: 'Avenir',
+                                                fontSize: 18,
+                                                color: isDarkMode
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          SizedBox(height: 50),
+                                          Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Mas información',
+                                                style: TextStyle(
+                                                    fontFamily: 'Avenir',
+                                                    fontSize: 16,
+                                                    color: isDarkMode
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                              Icon(Icons.arrow_forward)
+                                            ],
+                                          )
+                                        ]),
+                                  ),
+                                )
+                              ],
+                            ),
+                            /* Hero(
                         tag: consejos[index].position,
                         child: Image.asset(consejos[index].iconImage)) */
-                    ]),
-                  ));
-                },
-              ),
-            )
+                          ]),
+                        ));
+                      },
+                    ),
+                  )
+                : Text('Espere...'),
           ],
         ),
       ),

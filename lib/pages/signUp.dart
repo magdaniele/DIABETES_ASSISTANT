@@ -183,8 +183,7 @@ class _RegistrationState extends State<Registration> {
         }
       },
     );
-    final genderField = Column(
-      children: [
+    final genderField = Column(children: [
       ListTile(
         title: Text("Male"),
         leading: Radio(

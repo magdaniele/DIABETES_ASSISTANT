@@ -8,63 +8,66 @@ import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:diabetes_assistant/widget/numbersWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_assistant/widget/buildAppBar.dart';
-import 'package:diabetes_assistant/widget/profileWidget.dart ';
+import 'package:diabetes_assistant/widget/profileWidget.dart';
 import 'package:diabetes_assistant/widget/buttonWidget.dart';
+import 'package:provider/provider.dart';
 
 class userProfile extends StatelessWidget {
   const userProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-   UserModel user = userPreferences.myUser;
     return ThemeSwitchingArea(
-        child: Builder(
-            builder: (context) => Scaffold(
-                  appBar: buildAppBar(context),
-                  body: ListView(
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      ProfileWidget(
-                        imagePath: user.imagePath!,
-                        onClicked: () async {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => EditUserProfile()),
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      buildName(user),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Center(
-                        child: buildUpgradeButton(),
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      NumbersWidget(),
-                      const SizedBox(
-                        height: 48,
-                      ),
-                      buildAbout(user),
-                    ],
-                  ),
-              drawer: NavigationDrawer()
-                ),
-                ));
+      child: Builder(
+        builder: (context) => Scaffold(
+          appBar: buildAppBar(context),
+          body: Consumer<UserPreferences>(
+              builder: (context, userPreferences, child) {
+            UserModel user = userPreferences.user!;
+            return ListView(physics: BouncingScrollPhysics(), children: [
+              const SizedBox(
+                height: 24,
+              ),
+              ProfileWidget(
+                imagePath: user.imagePath! == ''
+                    ? 'assets/defaultProfileImg.jpg'
+                    : user.imagePath!,
+                onClicked: () async {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => EditUserProfile()),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              buildName(user),
+              const SizedBox(
+                height: 24,
+              ),
+              Center(
+                child: buildUpgradeButton(),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              NumbersWidget(user),
+              const SizedBox(
+                height: 48,
+              ),
+              buildAbout(user),
+            ]);
+          }),
+          drawer: NavigationDrawer(),
+        ),
+      ),
+    );
   }
 
   Widget buildName(UserModel user) => Column(
         children: [
           Text(
-            user.firstName!+' '+user.secondName!,
+            user.firstName! + ' ' + user.secondName!,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(

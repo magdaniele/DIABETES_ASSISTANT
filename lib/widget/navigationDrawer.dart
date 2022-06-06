@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_full_hex_values_for_flutter_colors, file_names, unused_import
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:diabetes_assistant/model/user.dart';
 import 'package:diabetes_assistant/pages/login.dart';
 import 'package:diabetes_assistant/privatePages/alarm.dart';
 import 'package:diabetes_assistant/privatePages/appointment.dart';
@@ -12,10 +13,10 @@ import 'package:diabetes_assistant/privatePages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
+import 'package:provider/provider.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  NavigationDrawer({Key? key}) : super(key: key);
-  final user = userPreferences.myUser;
+  const NavigationDrawer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Drawer(
         child: SingleChildScrollView(
@@ -41,8 +42,10 @@ class NavigationDrawer extends StatelessWidget {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top,
             ),
-            child: Column(
-              children: [
+            child: Consumer<UserPreferences>(
+                builder: (context, userPreferences, child) {
+              UserModel user = userPreferences.user!;
+              return Column(children: [
                 SizedBox(
                   height: 24,
                 ),
@@ -50,7 +53,11 @@ class NavigationDrawer extends StatelessWidget {
                   radius: 51.5,
                   backgroundColor: Colors.black,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage(user.imagePath!),
+                    backgroundImage: AssetImage(
+                      user.imagePath! == ''
+                          ? 'assets/defaultProfileImg.jpg'
+                          : user.imagePath!,
+                    ),
                     radius: 50.0,
                   ),
                 ),
@@ -58,7 +65,7 @@ class NavigationDrawer extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  user.firstName! +' '+user.secondName!,
+                  user.firstName! + ' ' + user.secondName!,
                   style: TextStyle(fontSize: 28, color: Colors.white),
                 ),
                 Text(
@@ -68,8 +75,8 @@ class NavigationDrawer extends StatelessWidget {
                 SizedBox(
                   height: 24,
                 ),
-              ],
-            ),
+              ]);
+            }),
           ),
         ),
       );
