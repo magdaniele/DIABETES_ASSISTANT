@@ -53,11 +53,7 @@ class NavigationDrawer extends StatelessWidget {
                   radius: 51.5,
                   backgroundColor: Colors.black,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                      user.imagePath! == ''
-                          ? 'assets/defaultProfileImg.jpg'
-                          : user.imagePath!,
-                    ),
+                    backgroundImage: user.imagePath! == ''?AssetImage('assets/defaultProfileImg.jpg'): NetworkImage(user.imagePath!) as ImageProvider,
                     radius: 50.0,
                   ),
                 ),

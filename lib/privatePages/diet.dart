@@ -171,37 +171,44 @@ class _DietPageState extends State<DietPage> {
                 padding: EdgeInsets.all(8.0),
                 child: Container(
                   child: Center(
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          'Niveles de glucemia',
-                          style: TextStyle(
-                              fontSize: 24.0, fontWeight: FontWeight.bold),
-                        ),
-                        Expanded(
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 200,
-                                    child: Image.asset(
-                                      'assets/big_logo.png',
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  SizedBox(height: 45),
-                                  glucoseField,
-                                  SizedBox(height: 20),
-                                  SizedBox(height: 45),
-                                  submitButton,
-                                  SizedBox(height: 15),
-                                ]),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'Niveles de glucemia',
+                            style: TextStyle(
+                                fontSize: 24.0, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 45),
+                          Expanded(
+                            child: Form(
+                              key: _formKey,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 200,
+                                        child: Image.asset(
+                                          'assets/big_logo.png',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                      SizedBox(height: 45),
+                                      glucoseField,
+                                      SizedBox(height: 20),
+                                      SizedBox(height: 45),
+                                      submitButton,
+                                      SizedBox(height: 15),
+                                    ]),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
