@@ -1,4 +1,4 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_unnecessary_containers, prefer_const_constructors, unused_local_variable
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diabetes_assistant/utils/foodData.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
+import 'package:translator/translator.dart';
 import '../model/user.dart';
 import '../utils/userPreferences.dart';
 
@@ -21,6 +22,7 @@ class _CalculatorState extends State {
   final rand = Random();
   final caloriesMax = 2800;
   final carbohydratesMax = 350;
+  final translator = GoogleTranslator();
 
   final foodController = TextEditingController();
   final weightController = TextEditingController();
@@ -273,10 +275,18 @@ class _CalculatorState extends State {
         ),
       ),
       suggestionsCallback: FoodData.getSuggestions,
-      itemBuilder: (context, String? suggestion) => ListTile(
-            title: Text(suggestion!),
-          ),
+      itemBuilder: (context, String? suggestion) {
+        var newSuggestion = traslate(suggestion!);
+        return ListTile(title: Text(newSuggestion.toString()));
+      },
       onSuggestionSelected: (String? suggestion) {
-        foodController.text = suggestion!;
+        traslate(suggestion!);
+        foodController.text = suggestion;
       });
+
+    Future<Translation> traslate(String text) async{
+      var data = await translator.translate(text,from: 'en', to: 'es');
+      print(data);
+      return data;
+    }
 }
