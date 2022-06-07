@@ -35,10 +35,10 @@ class _RegistrationState extends State<Registration> {
       validator: (value) {
         RegExp regex = new RegExp(r'^.{3,}');
         if (value!.isEmpty) {
-          return ("First name cannot be empty");
+          return ("Nombre no puede estar vacío.");
         }
         if (!regex.hasMatch(value)) {
-          return ("Please enter a valid Name(Min. 3 Character");
+          return ("Por favor introduzca un Name(Min. 3 Character");
         }
         return null;
       },
@@ -49,7 +49,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'First Name',
+        hintText: 'Nombre',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -60,7 +60,7 @@ class _RegistrationState extends State<Registration> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Second name cannot be empty");
+          return ("Apellido no puede estar vacío.");
         }
         return null;
       },
@@ -71,7 +71,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Second Name',
+        hintText: 'Apellido',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -82,10 +82,10 @@ class _RegistrationState extends State<Registration> {
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please Enter Your Email");
+          return ("Por favor introduzca su e-mail.");
         }
         if (!RegExp("^[a-zA-Z0-9+_.-]+@.[a-z]").hasMatch(value)) {
-          return ("Please Enter a valid email");
+          return ("Por favor introduzca un e-mail válido.");
         }
         return null;
       },
@@ -96,7 +96,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.mail),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Email',
+        hintText: 'E-mail',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -108,10 +108,10 @@ class _RegistrationState extends State<Registration> {
       validator: (value) {
         RegExp regex = new RegExp(r'^.{6,}');
         if (value!.isEmpty) {
-          return ('Please enter your password');
+          return ('Por favor introduzca su contraseña.');
         }
         if (!regex.hasMatch(value)) {
-          return ("Please enter a valid Password(Min. 6 Character");
+          return ("Por favor introduzca una contraseña válida (mínimo 6 caracteres).");
         }
         return null;
       },
@@ -122,7 +122,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.vpn_key_outlined),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Password',
+        hintText: 'Contraseña',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -132,7 +132,7 @@ class _RegistrationState extends State<Registration> {
       obscureText: true,
       validator: (value) {
         if (passwordController.text != confirmPasswordController.text) {
-          return ('Password dont match');
+          return ('La contraseña no concuerda.');
         }
         return null;
       },
@@ -143,7 +143,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.vpn_key),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Confirm Password',
+        hintText: 'Confirmar contraseña',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -154,7 +154,7 @@ class _RegistrationState extends State<Registration> {
       obscureText: false,
       validator: (value) {
         if (birthdayController.text == '') {
-          return ('Please enter a birth day');
+          return ('Por favor introduzca su fecha de nacimiento.');
         }
         return null;
       },
@@ -165,7 +165,7 @@ class _RegistrationState extends State<Registration> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.calendar_today),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Day of birth',
+        hintText: 'Fecha de nacimiento',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onTap: () async {
@@ -185,7 +185,7 @@ class _RegistrationState extends State<Registration> {
     );
     final genderField = Column(children: [
       ListTile(
-        title: Text("Male"),
+        title: Text("Hombre"),
         leading: Radio(
             value: "Hombre",
             groupValue: gender,
@@ -196,7 +196,7 @@ class _RegistrationState extends State<Registration> {
             }),
       ),
       ListTile(
-        title: Text("Female"),
+        title: Text("Mujer"),
         leading: Radio(
             value: "Mujer",
             groupValue: gender,
@@ -219,11 +219,11 @@ class _RegistrationState extends State<Registration> {
           if (gender != '') {
             signUp(emailController.text, passwordController.text);
           } else {
-            Fluttertoast.showToast(msg: 'Select a gender pls');
+            Fluttertoast.showToast(msg: 'Seleccione su género.');
           }
         },
         child: Text(
-          'Sign UP',
+          'Registrar',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -330,7 +330,7 @@ class _RegistrationState extends State<Registration> {
         .collection('users')
         .doc(user.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: 'Account created successfully');
+    Fluttertoast.showToast(msg: 'Cuenta creada.');
 
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => HomePage()), (route) => false);

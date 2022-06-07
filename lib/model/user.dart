@@ -12,6 +12,9 @@ class UserModel {
   double? height;
   String? gender;
   bool isDarkMode;
+  List<dynamic> glucoseTests = [];
+  Map<String, dynamic> mealPlan = {};
+  List<dynamic> alarms = [];
   UserModel({
     required this.uid,
     required this.firstName,
@@ -24,7 +27,21 @@ class UserModel {
     required this.height,
     required this.gender,
     required this.isDarkMode,
-  });
+    glucoseTests,
+    mealPlan,
+    alarms,
+  })  : glucoseTests = glucoseTests ?? [],
+        mealPlan = mealPlan ??
+            {
+              "Lunes": [],
+              "Martes": [],
+              "Miércoles": [],
+              "Jueves": [],
+              "Viernes": [],
+              "Sábado": [],
+              "Domingo": [],
+            },
+        alarms = alarms ?? [];
   //recieve data
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -39,6 +56,9 @@ class UserModel {
       height: map['height'],
       isDarkMode: map['isDarkMode'],
       gender: map['gender'],
+      glucoseTests: map['glucoseTests'],
+      mealPlan: map['mealPlan'],
+      alarms: map['alarms'],
     );
   }
   //send data
@@ -54,7 +74,10 @@ class UserModel {
       'weight': weight,
       'height': height,
       'isDarkMode': isDarkMode,
-      'gender':gender
+      'gender': gender,
+      'glucoseTests': glucoseTests,
+      'mealPlan': mealPlan,
+      'alarms': alarms,
     };
   }
 }

@@ -5,7 +5,6 @@ import 'package:diabetes_assistant/privatePages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -29,10 +28,10 @@ class _LoginState extends State<Login> {
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please Enter Your Email");
+          return ("Por favor introduzca su e-mail.");
         }
         if (!RegExp("^[a-zA-Z0-9+_.-]+@.[a-z]").hasMatch(value)) {
-          return ("Please Enter a valid email");
+          return ("Por favor introduzca un e-mail válido.");
         }
         return null;
       },
@@ -55,10 +54,10 @@ class _LoginState extends State<Login> {
       validator: (value) {
         RegExp regex = new RegExp(r'^.{6,}');
         if (value!.isEmpty) {
-          return ('Please enter your password');
+          return ('Por favor introduzca su contraseña.');
         }
         if (!regex.hasMatch(value)) {
-          return ("Please enter a valid Password(Min. 6 Character");
+          return ("Por favor introduzca una contraseña válida (mínimo 6 caracteres).");
         }
         return null;
       },
@@ -124,7 +123,7 @@ class _LoginState extends State<Login> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Don't have an account? "),
+                        Text("No tienes una cuenta?"),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -133,7 +132,7 @@ class _LoginState extends State<Login> {
                                     builder: (context) => Registration()));
                           },
                           child: Text(
-                            'SignUp',
+                            'Registro',
                             style: TextStyle(
                                 color: Color(0xFF84BDCE),
                                 fontWeight: FontWeight.w500,
@@ -155,7 +154,7 @@ class _LoginState extends State<Login> {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Succesfull"),
+                Fluttertoast.showToast(msg: "Sesión iniciada."),
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: ((context) => HomePage())))
               })
@@ -163,50 +162,5 @@ class _LoginState extends State<Login> {
         Fluttertoast.showToast(msg: e!.message);
       });
     }
-  }
-}
-
-class LoginGet extends StatelessWidget {
-  String url = "";
-  Future<String> res() async {
-    var respuesta = await http.get(Uri.parse(url));
-
-    print(respuesta.body);
-    return respuesta.body;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        child: Text(""),
-        onPressed: () {
-          res();
-        },
-      ),
-    );
-  }
-}
-
-class LoginPost extends StatelessWidget {
-  String url = "";
-  Future<String> userLogin() async {
-    var respuesta = await http
-        .post(Uri.parse(url), body: {"username": "name", "password": "*****"});
-
-    print(respuesta.body);
-    return respuesta.body;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        child: Text(""),
-        onPressed: () {
-          userLogin();
-        },
-      ),
-    );
   }
 }
