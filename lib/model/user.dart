@@ -31,16 +31,25 @@ class UserModel {
     mealPlan,
     alarms,
   })  : glucoseTests = glucoseTests ?? [],
-        mealPlan = mealPlan ??
-            {
-              "Lunes": [],
-              "Martes": [],
-              "Miércoles": [],
-              "Jueves": [],
-              "Viernes": [],
-              "Sábado": [],
-              "Domingo": [],
-            },
+        mealPlan = mealPlan == null
+            ? {
+                "Lunes": [],
+                "Martes": [],
+                "Miércoles": [],
+                "Jueves": [],
+                "Viernes": [],
+                "Sábado": [],
+                "Domingo": [],
+              }
+            : {
+                "Lunes": mealPlan["Lunes"] ?? [],
+                "Martes": mealPlan["Martes"] ?? [],
+                "Miércoles": mealPlan["Miércoles"] ?? [],
+                "Jueves": mealPlan["Jueves"] ?? [],
+                "Viernes": mealPlan["Viernes"] ?? [],
+                "Sábado": mealPlan["Sábado"] ?? [],
+                "Domingo": mealPlan["Domingo"] ?? [],
+              },
         alarms = alarms ?? [];
   //recieve data
   factory UserModel.fromMap(map) {

@@ -14,7 +14,7 @@ class DietPage extends StatelessWidget {
 
   DietPage({Key? key, required this.child}) : super(key: key);
 
-  final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>();
   final glucoseController = new TextEditingController();
 
   Widget chartWidget() => Consumer<UserPreferences>(

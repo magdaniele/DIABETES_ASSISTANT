@@ -15,7 +15,7 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
-  final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>();
 
   final firstNameController = new TextEditingController();
   final secondNameController = new TextEditingController();
