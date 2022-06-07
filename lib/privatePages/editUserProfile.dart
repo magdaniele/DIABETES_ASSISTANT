@@ -36,17 +36,20 @@ class _EditUserProfileState extends State<EditUserProfile> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserPreferences>(context, listen: false).user!;
-
+    if (user.imagePath != '') {
+      _load = true;
+      urlImage = user.imagePath!;
+    }
     final firstNameField = TextFormField(
       autofocus: false,
       controller: firstNameController,
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Nombre no puede estar vacío.");
+          return ("First name cannot be empty");
         }
         if (!RegExp(r'^.{3,}').hasMatch(value)) {
-          return ("Por favor introduzca un nombre válido (mínimo 3 caracteres).");
+          return ("Please enter a valid Name(Min. 3 Character");
         }
         return null;
       },
@@ -57,7 +60,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Nombre',
+        hintText: 'First Name',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -68,7 +71,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Apellido no puede estar vacío.");
+          return ("Second name cannot be empty");
         }
         return null;
       },
@@ -79,7 +82,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Apellido',
+        hintText: 'Second Name',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -90,10 +93,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Por favor introduzca su altura.");
+          return ("Please Enter Your Height");
         }
         if (!RegExp("^[0-9]+(.[0-9]+)?").hasMatch(value)) {
-          return ("Por favor introduzca una altura válida.");
+          return ("Please Enter a valid height");
         }
         return null;
       },
@@ -102,9 +105,9 @@ class _EditUserProfileState extends State<EditUserProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.straighten),
+        prefixIcon: Icon(Icons.rule),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Altura',
+        hintText: 'Height',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -115,10 +118,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Por favor introduzca su peso.");
+          return ("Please Enter Your Weight");
         }
         if (!RegExp("^[0-9]+(.[0-9]+)?").hasMatch(value)) {
-          return ("Por favor introduzca un peso válido.");
+          return ("Please Enter a valid weight");
         }
         return null;
       },
@@ -129,7 +132,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.scale),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Peso',
+        hintText: 'Weight',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -145,7 +148,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       maxLines: 5,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Descripción',
+        hintText: 'About',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
@@ -169,7 +172,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
           Navigator.of(context).pop();
         },
         child: Text(
-          'Guardar datos',
+          'Save Data',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -190,9 +193,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       const SizedBox(height: 24),
-                      imageProfile(user.imagePath! == ''
-                          ? 'assets/defaultProfileImg.jpg'
-                          : user.imagePath!),
+                      imageProfile('assets/defaultProfileImg.jpg'),
                       const SizedBox(height: 24),
                       firstNameField,
                       const SizedBox(height: 24),
@@ -225,7 +226,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       child: Column(
         children: <Widget>[
           Text(
-            'Subir foto de perfil',
+            'Choose Profile Picture',
             style: TextStyle(fontSize: 20.0),
           ),
           SizedBox(
@@ -235,21 +236,15 @@ class _EditUserProfileState extends State<EditUserProfile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton.icon(
-                  onPressed: selectPicture,
-                  icon: Icon(Icons.camera),
-                  label: Text('Camara')),
-              ElevatedButton.icon(
                   onPressed: uploadPicture,
-                  icon: Icon(Icons.image),
-                  label: Text('Galería')),
+                  icon: Icon(Icons.upload),
+                  label: Text('Adjuntar foto')),
             ],
           )
         ],
       ),
     );
   }
-
-  Future selectPicture() async {}
 
   Future uploadPicture() async {
     final result = await FilePicker.platform.pickFiles(

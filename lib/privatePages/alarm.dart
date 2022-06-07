@@ -168,7 +168,6 @@ class _Alarm extends State<Alarm> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 32, vertical: 8),
                             onPressed: () {
-                              //scheduleAlarm();
                               _alarmTimeString =
                                   DateFormat('HH:mm').format(DateTime.now());
                               showModalBottomSheet(
@@ -189,7 +188,9 @@ class _Alarm extends State<Alarm> {
                                         child: Column(
                                           children: [
                                             ElevatedButton(
-                                              style: ElevatedButton.styleFrom(primary: const Color(0xff8215466)),
+                                              style: ElevatedButton.styleFrom(
+                                                  primary:
+                                                      const Color(0xff8215466)),
                                               onPressed: () async {
                                                 var selectedTime =
                                                     await showTimePicker(
@@ -239,7 +240,8 @@ class _Alarm extends State<Alarm> {
                                               icon: Icon(Icons.alarm),
                                               label: Text('Save'),
                                               foregroundColor: Colors.white,
-                                              backgroundColor: const Color(0xff8215466),
+                                              backgroundColor:
+                                                  const Color(0xff8215466),
                                             ),
                                           ],
                                         ),
@@ -317,8 +319,9 @@ class _Alarm extends State<Alarm> {
   }
 
   void onSaveAlarm() {
-    DateTime scheduleAlarmDateTime;
-/*     if (_alarmTime.isAfter(DateTime.now()))
+    scheduleAlarm();
+/*    DateTime scheduleAlarmDateTime;
+     if (_alarmTime.isAfter(DateTime.now()))
       scheduleAlarmDateTime = _alarmTime;
     else
       scheduleAlarmDateTime = _alarmTime.add(Duration(days: 1));
