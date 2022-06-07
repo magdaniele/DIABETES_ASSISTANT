@@ -39,10 +39,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("First name cannot be empty");
+          return ("Nombre no puede estar vacío.");
         }
         if (!RegExp(r'^.{3,}').hasMatch(value)) {
-          return ("Please enter a valid Name(Min. 3 Character");
+          return ("Por favor introduzca un nombre válido (mínimo 3 caracteres).");
         }
         return null;
       },
@@ -53,7 +53,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'First Name',
+        hintText: 'Nombre',
       ),
     );
 
@@ -63,7 +63,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Second name cannot be empty");
+          return ("Apellido no puede estar vacío.");
         }
         return null;
       },
@@ -74,7 +74,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Second Name',
+        hintText: 'Apellido',
       ),
     );
 
@@ -84,10 +84,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please Enter Your Height");
+          return ("Por favor introduzca su altura.");
         }
         if (!RegExp("^[0-9]+(.[0-9]+)?").hasMatch(value)) {
-          return ("Please Enter a valid height");
+          return ("Por favor introduzca una altura válida.");
         }
         return null;
       },
@@ -96,9 +96,9 @@ class _EditUserProfileState extends State<EditUserProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.rule),
+        prefixIcon: Icon(Icons.straighten),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Height',
+        hintText: 'Altura',
       ),
     );
 
@@ -108,10 +108,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Please Enter Your Weight");
+          return ("Por favor introduzca su peso.");
         }
         if (!RegExp("^[0-9]+(.[0-9]+)?").hasMatch(value)) {
-          return ("Please Enter a valid weight");
+          return ("Por favor introduzca un peso válido.");
         }
         return null;
       },
@@ -122,7 +122,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.scale),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'Weight',
+        hintText: 'Peso',
       ),
     );
 
@@ -137,7 +137,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       maxLines: 5,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: 'About',
+        hintText: 'Descripción',
       ),
     );
 
@@ -159,7 +159,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
           Navigator.of(context).pop();
         },
         child: Text(
-          'Save Data',
+          'Guardar datos',
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -208,7 +208,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       child: Column(
         children: <Widget>[
           Text(
-            'Choose Profile Picture',
+            'Subir foto de perfil',
             style: TextStyle(fontSize: 20.0),
           ),
           SizedBox(
@@ -222,13 +222,13 @@ class _EditUserProfileState extends State<EditUserProfile> {
                     takePicture(ImageSource.camera);
                   },
                   icon: Icon(Icons.camera),
-                  label: Text('Camera')),
+                  label: Text('Camara')),
               ElevatedButton.icon(
                   onPressed: () {
                     takePicture(ImageSource.gallery);
                   },
                   icon: Icon(Icons.image),
-                  label: Text('Gallery')),
+                  label: Text('Galería')),
             ],
           )
         ],

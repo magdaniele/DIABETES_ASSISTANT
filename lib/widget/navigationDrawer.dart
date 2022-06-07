@@ -87,7 +87,7 @@ class NavigationDrawer extends StatelessWidget {
         children: [
           ListTile(
             leading: const Icon(Icons.home_outlined),
-            title: const Text('Home'),
+            title: const Text('Consejos'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
@@ -96,7 +96,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.person_outline),
-            title: const Text('Profile'),
+            title: const Text('Perfil'),
             onTap: () => {
               Navigator.pop(context),
               Navigator.of(context).push(
@@ -116,7 +116,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.alarm),
-            title: const Text('Notificar Medicamento'),
+            title: const Text('Alarmas'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
@@ -136,7 +136,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.chat_outlined),
-            title: const Text('Chat with your doctor'),
+            title: const Text('Habla con tu doctor'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
@@ -147,7 +147,7 @@ class NavigationDrawer extends StatelessWidget {
           const Divider(color: Colors.black),
           ListTile(
             leading: const Icon(Icons.logout),
-            title: const Text('Log Out'),
+            title: const Text('Cerrar sesión'),
             onTap: () {
               FirebaseAuth.instance.signOut().then((value) => {
                     Navigator.of(context).pushReplacement(

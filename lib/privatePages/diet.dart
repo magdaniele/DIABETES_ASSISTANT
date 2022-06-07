@@ -1,102 +1,77 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, unused_field, deprecated_member_use, prefer_collection_literals, prefer_const_constructors, non_constant_identifier_names, unnecessary_new, annotate_overrides, avoid_unnecessary_containers, avoid_types_as_parameter_names, prefer_const_constructors_in_immutables, prefer_final_fields
 //import 'package:diabetes_assistant/model/user.dart';
 //import 'package:diabetes_assistant/utils/userPreferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:diabetes_assistant/widget/navigationDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-class DietPage extends StatefulWidget {
+class DietPage extends StatelessWidget {
   final Widget child;
 
   DietPage({Key? key, required this.child}) : super(key: key);
 
-  _DietPageState createState() => _DietPageState();
-}
-
-class _DietPageState extends State<DietPage> {
-  List<charts.Series<GlucoseTest, DateTime>> _seriesLineData = [];
   final _formKey = GlobalKey<FormState>();
   final glucoseController = new TextEditingController();
-  var glucoseData = [
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 85),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 95),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 80),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 110),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 78),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 92),
-  ];
-  var line1 = [
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 125),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 125),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 125),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 125),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 125),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 125),
-  ];
-  var line2 = [
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 100),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 100),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 100),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 100),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 100),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 100),
-  ];
-  var line3 = [
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 6)), 70),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 5)), 70),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 4)), 70),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 3)), 70),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 2)), 70),
-    new GlucoseTest(DateTime.now().subtract(Duration(days: 1)), 70),
-  ];
-  _generateData() {
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Colors.blueAccent),
-        id: 'Constant',
-        data: glucoseData,
-        domainFn: (GlucoseTest test, _) => test.date,
-        measureFn: (GlucoseTest test, _) => test.value,
-      ),
-    );
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) =>
-            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 223, 168, 50)),
-        id: 'Constant1',
-        data: line1,
-        domainFn: (GlucoseTest test, _) => test.date,
-        measureFn: (GlucoseTest test, _) => test.value,
-      ),
-    );
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) =>
-            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 70, 223, 50)),
-        id: 'Constant2',
-        data: line2,
-        domainFn: (GlucoseTest test, _) => test.date,
-        measureFn: (GlucoseTest test, _) => test.value,
-      ),
-    );
-    _seriesLineData.add(
-      charts.Series(
-        colorFn: (__, _) =>
-            charts.ColorUtil.fromDartColor(Color.fromARGB(255, 70, 223, 50)),
-        id: 'Constant3',
-        data: line3,
-        domainFn: (GlucoseTest test, _) => test.date,
-        measureFn: (GlucoseTest test, _) => test.value,
-      ),
-    );
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    _generateData();
-  }
+  Widget chartWidget() => Consumer<UserPreferences>(
+        builder: (context, userPreferences, child) {
+          List<dynamic> glucoseTests = userPreferences.user!.glucoseTests;
+          return charts.TimeSeriesChart(
+            [
+              charts.Series(
+                colorFn: (__, _) =>
+                    charts.ColorUtil.fromDartColor(Colors.blueAccent),
+                id: 'Data',
+                data: glucoseTests,
+                domainFn: (test, _) => (test['fecha'] as Timestamp).toDate(),
+                measureFn: (test, _) => test['valor'] as int,
+              ),
+              charts.Series(
+                colorFn: (__, _) => charts.ColorUtil.fromDartColor(
+                    Color.fromARGB(255, 223, 168, 50)),
+                id: 'Constant1',
+                data: glucoseTests,
+                domainFn: (test, _) => (test['fecha'] as Timestamp).toDate(),
+                measureFn: (test, _) => 70,
+              ),
+              charts.Series(
+                colorFn: (__, _) => charts.ColorUtil.fromDartColor(
+                    Color.fromARGB(255, 70, 223, 50)),
+                id: 'Constant2',
+                data: glucoseTests,
+                domainFn: (test, _) => (test['fecha'] as Timestamp).toDate(),
+                measureFn: (test, _) => 100,
+              ),
+              charts.Series(
+                colorFn: (__, _) => charts.ColorUtil.fromDartColor(
+                    Color.fromARGB(255, 70, 223, 50)),
+                id: 'Constant3',
+                data: glucoseTests,
+                domainFn: (test, _) => (test['fecha'] as Timestamp).toDate(),
+                measureFn: (test, _) => 125,
+              ),
+            ],
+            defaultRenderer: new charts.LineRendererConfig(
+                includeArea: false, stacked: false),
+            animate: true,
+            animationDuration: Duration(seconds: 2),
+            behaviors: [
+              new charts.ChartTitle('Días',
+                  behaviorPosition: charts.BehaviorPosition.bottom,
+                  titleOutsideJustification:
+                      charts.OutsideJustification.middleDrawArea),
+              new charts.ChartTitle('Glucemia (mg/dL)',
+                  behaviorPosition: charts.BehaviorPosition.start,
+                  titleOutsideJustification:
+                      charts.OutsideJustification.middleDrawArea),
+            ],
+          );
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -131,11 +106,10 @@ class _DietPageState extends State<DietPage> {
                   style: TextStyle(fontSize: 16)),
             ));
           } else {
-            setState(() {
-              glucoseData.add(GlucoseTest(DateTime.now(), glucose));
-              line1.add(GlucoseTest(DateTime.now(), 125));
-              line2.add(GlucoseTest(DateTime.now(), 100));
-              line3.add(GlucoseTest(DateTime.now(), 70));
+            Provider.of<UserPreferences>(context, listen: false).updateUser({
+              "glucoseTests": FieldValue.arrayUnion([
+                {"fecha": Timestamp.now(), "valor": glucose}
+              ])
             });
             glucoseController.text = "";
           }
@@ -218,23 +192,7 @@ class _DietPageState extends State<DietPage> {
                               fontSize: 24.0, fontWeight: FontWeight.bold),
                         ),
                         Expanded(
-                          child: charts.TimeSeriesChart(_seriesLineData,
-                              defaultRenderer: new charts.LineRendererConfig(
-                                  includeArea: false, stacked: false),
-                              animate: true,
-                              animationDuration: Duration(seconds: 2),
-                              behaviors: [
-                                new charts.ChartTitle('Dias',
-                                    behaviorPosition:
-                                        charts.BehaviorPosition.bottom,
-                                    titleOutsideJustification: charts
-                                        .OutsideJustification.middleDrawArea),
-                                new charts.ChartTitle('Glucemia(mg/dL)',
-                                    behaviorPosition:
-                                        charts.BehaviorPosition.start,
-                                    titleOutsideJustification: charts
-                                        .OutsideJustification.middleDrawArea),
-                              ]),
+                          child: chartWidget(),
                         ),
                       ],
                     ),
