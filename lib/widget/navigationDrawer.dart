@@ -5,7 +5,6 @@ import 'package:diabetes_assistant/pages/login.dart';
 import 'package:diabetes_assistant/privatePages/alarm.dart';
 import 'package:diabetes_assistant/privatePages/appointment.dart';
 import 'package:diabetes_assistant/privatePages/calculator.dart';
-//import 'package:diabetes_assistant/privatePages/alarm.dart';
 import 'package:diabetes_assistant/privatePages/diet.dart';
 import 'package:diabetes_assistant/privatePages/home.dart';
 import 'package:diabetes_assistant/privatePages/profile.dart';
@@ -126,7 +125,7 @@ class NavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.calculate_outlined),
-            title: const Text('Calculadora'),
+            title: const Text('Plan de comidas'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(

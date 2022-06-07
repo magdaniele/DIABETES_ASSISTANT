@@ -13,7 +13,7 @@ class UserModel {
   String? gender;
   bool isDarkMode;
   List<dynamic> glucoseTests = [];
-  Map<String, dynamic> foodPlan = {};
+  Map<String, dynamic> mealPlan = {};
   List<dynamic> alarms = [];
   UserModel({
     required this.uid,
@@ -28,10 +28,19 @@ class UserModel {
     required this.gender,
     required this.isDarkMode,
     glucoseTests,
-    foodPlan,
+    mealPlan,
     alarms,
   })  : glucoseTests = glucoseTests ?? [],
-        foodPlan = foodPlan ?? {},
+        mealPlan = mealPlan ??
+            {
+              "Lunes": [],
+              "Martes": [],
+              "Miércoles": [],
+              "Jueves": [],
+              "Viernes": [],
+              "Sábado": [],
+              "Domingo": [],
+            },
         alarms = alarms ?? [];
   //recieve data
   factory UserModel.fromMap(map) {
@@ -48,7 +57,7 @@ class UserModel {
       isDarkMode: map['isDarkMode'],
       gender: map['gender'],
       glucoseTests: map['glucoseTests'],
-      foodPlan: map['foodPlan'],
+      mealPlan: map['mealPlan'],
       alarms: map['alarms'],
     );
   }
@@ -67,7 +76,7 @@ class UserModel {
       'isDarkMode': isDarkMode,
       'gender': gender,
       'glucoseTests': glucoseTests,
-      'foodPlan': foodPlan,
+      'mealPlan': mealPlan,
       'alarms': alarms,
     };
   }
