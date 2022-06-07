@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, deprecated_member_use, unnecessary_null_comparison, file_names
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, deprecated_member_use, unnecessary_null_comparison, file_names, unused_local_variable
+import 'dart:io';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:diabetes_assistant/utils/userPreferences.dart';
 import 'package:diabetes_assistant/widget/buildAppBar.dart';
 import 'package:diabetes_assistant/widget/profileWidget.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../model/user.dart';
@@ -15,23 +17,25 @@ class EditUserProfile extends StatefulWidget {
 }
 
 class _EditUserProfileState extends State<EditUserProfile> {
-  late PickedFile _imageFile;
-  final ImagePicker _picker = ImagePicker();
-  late TextEditingController firstNameController;
-  late TextEditingController secondNameController;
-  late TextEditingController aboutController;
-  late TextEditingController weightController;
-  late TextEditingController heightController;
+  final _formKey = GlobalKey<FormState>();
+  PlatformFile? pickedFile;
+  late UserModel user;
+  late TextEditingController firstNameController =
+      TextEditingController(text: user.firstName);
+  late TextEditingController secondNameController =
+      TextEditingController(text: user.secondName);
+  late TextEditingController aboutController =
+      TextEditingController(text: user.about);
+  late TextEditingController weightController =
+      TextEditingController(text: user.weight.toString());
+  late TextEditingController heightController =
+      TextEditingController(text: user.height.toString());
+  String urlImage = '';
   bool _load = false;
-
+  UploadTask? uploadTask;
   @override
   Widget build(BuildContext context) {
-    UserModel user = Provider.of<UserPreferences>(context, listen: false).user!;
-    firstNameController = TextEditingController(text: user.firstName);
-    secondNameController = TextEditingController(text: user.secondName);
-    aboutController = TextEditingController(text: user.about);
-    weightController = TextEditingController(text: user.weight.toString());
-    heightController = TextEditingController(text: user.height.toString());
+    user = Provider.of<UserPreferences>(context, listen: false).user!;
 
     final firstNameField = TextFormField(
       autofocus: false,
@@ -54,6 +58,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Nombre',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
@@ -75,6 +80,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Apellido',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
@@ -99,6 +105,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         prefixIcon: Icon(Icons.straighten),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Altura',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
@@ -123,6 +130,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         prefixIcon: Icon(Icons.scale),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Peso',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
@@ -138,6 +146,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Descripción',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
@@ -155,6 +164,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
             "about": aboutController.text,
             "weight": double.parse(weightController.text),
             "height": double.parse(heightController.text),
+            "imagePath": urlImage,
           });
           Navigator.of(context).pop();
         },
@@ -170,27 +180,34 @@ class _EditUserProfileState extends State<EditUserProfile> {
       child: Builder(
         builder: (context) => Scaffold(
           appBar: buildAppBar(context),
-          body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 32),
-            physics: BouncingScrollPhysics(),
-            children: [
-              const SizedBox(height: 24),
-              imageProfile(user.imagePath! == ''
-                  ? 'assets/defaultProfileImg.jpg'
-                  : user.imagePath!),
-              const SizedBox(height: 24),
-              firstNameField,
-              const SizedBox(height: 24),
-              secondNameField,
-              const SizedBox(height: 24),
-              aboutField,
-              const SizedBox(height: 24),
-              weightField,
-              const SizedBox(height: 24),
-              heightField,
-              const SizedBox(height: 24),
-              updateUser,
-            ],
+          body: Padding(
+            padding: const EdgeInsets.only(top: 36.0, left: 36.0, right: 36.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const SizedBox(height: 24),
+                      imageProfile(user.imagePath! == ''
+                          ? 'assets/defaultProfileImg.jpg'
+                          : user.imagePath!),
+                      const SizedBox(height: 24),
+                      firstNameField,
+                      const SizedBox(height: 24),
+                      secondNameField,
+                      const SizedBox(height: 24),
+                      aboutField,
+                      const SizedBox(height: 24),
+                      weightField,
+                      const SizedBox(height: 24),
+                      heightField,
+                      const SizedBox(height: 24),
+                      updateUser,
+                    ]),
+              ),
+            ),
           ),
         ),
       ),
@@ -218,15 +235,11 @@ class _EditUserProfileState extends State<EditUserProfile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton.icon(
-                  onPressed: () {
-                    takePicture(ImageSource.camera);
-                  },
+                  onPressed: selectPicture,
                   icon: Icon(Icons.camera),
                   label: Text('Camara')),
               ElevatedButton.icon(
-                  onPressed: () {
-                    takePicture(ImageSource.gallery);
-                  },
+                  onPressed: uploadPicture,
                   icon: Icon(Icons.image),
                   label: Text('Galería')),
             ],
@@ -236,14 +249,28 @@ class _EditUserProfileState extends State<EditUserProfile> {
     );
   }
 
-  void takePicture(ImageSource source) async {
-    final pickedFile = await _picker.getImage(
-      source: source,
-    );
+  Future selectPicture() async {}
+
+  Future uploadPicture() async {
+    final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['jpg', 'png', 'jpeg']);
+    if (result == null) return;
     setState(() {
-      _imageFile = pickedFile!;
+      pickedFile = result.files.first;
       _load = true;
     });
+    final path = 'files/${pickedFile?.name}';
+    final file = File(pickedFile!.path!);
+    final ref = FirebaseStorage.instance.ref().child(path);
+
+    uploadTask = ref.putFile(file);
+
+    final snapshot = await uploadTask!.whenComplete(() => {});
+
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    urlImage = urlDownload;
+    /* print('Download link: $urlDownload'); */
+    imageProfile(urlDownload);
   }
 
   Widget imageProfile(imagePath) {
@@ -256,7 +283,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                       context: context, builder: ((builder) => bottomSheet()));
                 },
                 isPath: true,
-                fileImage: _imageFile.path,
+                fileImage: urlImage,
               )
             : ProfileWidget(
                 imagePath: imagePath,

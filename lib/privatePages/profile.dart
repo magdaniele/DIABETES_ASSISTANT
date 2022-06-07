@@ -32,6 +32,9 @@ class userProfile extends StatelessWidget {
                 imagePath: user.imagePath! == ''
                     ? 'assets/defaultProfileImg.jpg'
                     : user.imagePath!,
+                isPath: user.imagePath! == ''
+                    ? false: true,
+                  fileImage: user.imagePath!,
                 onClicked: () async {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => EditUserProfile()),

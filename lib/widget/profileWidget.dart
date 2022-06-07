@@ -1,7 +1,4 @@
-// ignore_for_file: override_on_non_overriding_member, annotate_overrides, file_names
-
-import 'dart:io';
-
+// ignore_for_file: override_on_non_overriding_member, annotate_overrides, file_names, unnecessary_null_comparison
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -39,7 +36,7 @@ class ProfileWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: isPath? FileImage(File(fileImage)) as ImageProvider: AssetImage(image),
+          image: isPath? (fileImage!=null)? NetworkImage(fileImage) : AssetImage(image) as ImageProvider : AssetImage(image),
           fit: BoxFit.cover,
           width: 128,
           height: 128,
