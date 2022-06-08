@@ -32,7 +32,7 @@ class DietPage extends StatelessWidget {
               ),
               charts.Series(
                 colorFn: (__, _) => charts.ColorUtil.fromDartColor(
-                    Color.fromARGB(255, 223, 168, 50)),
+                    Color.fromARGB(255, 70, 223, 50)),
                 id: 'Constant1',
                 data: glucoseTests,
                 domainFn: (test, _) => (test['fecha'] as Timestamp).toDate(),
@@ -48,7 +48,7 @@ class DietPage extends StatelessWidget {
               ),
               charts.Series(
                 colorFn: (__, _) => charts.ColorUtil.fromDartColor(
-                    Color.fromARGB(255, 70, 223, 50)),
+                    Color.fromARGB(255, 223, 168, 50)),
                 id: 'Constant3',
                 data: glucoseTests,
                 domainFn: (test, _) => (test['fecha'] as Timestamp).toDate(),
@@ -60,7 +60,7 @@ class DietPage extends StatelessWidget {
             animate: true,
             animationDuration: Duration(seconds: 2),
             behaviors: [
-              new charts.ChartTitle('Días',
+              new charts.ChartTitle('Tiempo',
                   behaviorPosition: charts.BehaviorPosition.bottom,
                   titleOutsideJustification:
                       charts.OutsideJustification.middleDrawArea),
