@@ -274,19 +274,15 @@ class _CalculatorState extends State {
           border: OutlineInputBorder(),
         ),
       ),
-      suggestionsCallback: FoodData.getSuggestions,
+      suggestionsCallback: (query) =>
+          Future.wait(FoodData.getSuggestions(query).map(translate)),
       itemBuilder: (context, String? suggestion) {
-        var newSuggestion = traslate(suggestion!);
-        return ListTile(title: Text(newSuggestion.toString()));
+        return ListTile(title: Text(suggestion!));
       },
       onSuggestionSelected: (String? suggestion) {
-        traslate(suggestion!);
-        foodController.text = suggestion;
+        foodController.text = suggestion!;
       });
 
-    Future<Translation> traslate(String text) async{
-      var data = await translator.translate(text,from: 'en', to: 'es');
-      print(data);
-      return data;
-    }
+  Future<String> translate(String text) async =>
+      (await translator.translate(text, from: 'en', to: 'es')).text;
 }

@@ -17,7 +17,7 @@ class EditUserProfile extends StatefulWidget {
 }
 
 class _EditUserProfileState extends State<EditUserProfile> {
-  final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>();
   PlatformFile? pickedFile;
   late UserModel user;
   late TextEditingController firstNameController =
